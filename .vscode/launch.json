@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Запуск файла",
+      "program": "${file}",
+      "console": "integratedTerminal" // Вывод в терминал, а не в Debug Console
+    }
+  ]
+}
