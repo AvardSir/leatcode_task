@@ -4,9 +4,16 @@ class Solution {
      * @return {boolean}
      */
     hasDuplicate(nums) {
-        for (let i = 0; i < nums.length; i++) {
-            const element = array[i];
-            
+        const set=new Set();
+        for (const i of nums) {
+            if (set.has(i)) {
+                return true
+            }
+            else{
+                set.add(i)
+            }
         }
+        return false
     }
 }
+// оно работает
