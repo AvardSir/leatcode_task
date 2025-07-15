@@ -1,4 +1,3 @@
-const pq = new MinPriorityQueue();
-pq.insert(1)
-
+let a= [""].join(' ').split('')
+let b= []
 pas=1
