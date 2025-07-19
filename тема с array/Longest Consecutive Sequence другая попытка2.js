@@ -19,7 +19,6 @@ class Solution {
                     // надо
 
                     let count_up = map_taks.get(nums[i] + 1)
-                    // я закончил ниже
                     let end = nums[i] + 1 + count_up - 1
 
                     let count_down = map_taks.get(nums[i] - 1)
