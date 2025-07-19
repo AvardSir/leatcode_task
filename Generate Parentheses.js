@@ -1,51 +1,51 @@
 class Solution {
     /**
-     * @param {string[]} tokens
-     * @return {number}
+     * @param {number} n
+     * @return {string[]}
      */
-    evalRPN(tokens) {
-        let stack = []
-        for (const i of tokens) {
-            if (!isNaN(i)) {
-                stack.push(parseInt(i))
-            }
-            else {
-                // тоест это не чилос + - *
-                let prev = stack.pop()
-                let prev_prev = stack.pop()
+    generateParenthesis(n) {
+        let ans = []
+        let stack_left = []
+        for (let i = 0; i < n; i++) {
+            stack_left.push('(')
 
-                let total = 0
-                if (i == '+') {
-                    total = prev + prev_prev
-
-                }
-                if (i == '-') {
-                    total = prev_prev - prev
-
-                }
-                if (i == '*') {
-                    total = prev * prev_prev
-
-                }
-                if (i == '/') {
-                    total = Math.trunc(prev_prev / prev)
-
-
-                }
-                stack.push(total)
-            }
         }
+        let stack_right = []
+        let str = ''
+        function dfs(str, stack_left, stack_right) {
 
-        return stack[0]
+            if (stack_left.length == 0 && stack_right.length == 0) {
+                ans.push(str)
+                return
+            }
+
+            if (stack_left.length != 0) {
+
+                // str += stack_left.pop()
+                // stack_right.push(')')
+                let pop_l = stack_left.slice(0, stack_left.length - 1)
+                // let push_r=
+                // dfs(str, [...stack_left], [...stack_right])
+                dfs(str + stack_left[stack_left.length - 1], [...pop_l], [...stack_right,')'])
+
+
+            }
+            if (stack_right.length != 0) {
+
+                // str += stack_right.pop()
+                let pop_r = stack_right.slice(0, stack_right.length - 1)
+                dfs(str + stack_right[stack_right.length - 1], [...stack_left], [...pop_r])
+            }
+
+        }
+        dfs(str, stack_left, stack_right)
+        return ans
     }
 }
 
+// оно работате
 a = new Solution()
-tokens = ["1", "2", "+", "3", "*", "4", "-"]
-tokens=["10","6","9","3","+","-11","*","/","*","17","+","5","+"]
-// Output: 5
+n = 1
 
-// Explanation: ((1 + 2) * 3) - 4 = 5
-
-console.log('a.productExceptSelf(tescae1)::: ', a.evalRPN(tokens));
+console.log('a.productExceptSelf(tescae1)::: ', a.generateParenthesis(n));
 

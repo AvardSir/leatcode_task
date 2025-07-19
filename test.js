@@ -1,13 +1,2 @@
-let ar = ['1', 'b']
-for (const i of ar) {
-    // console.log('typeof i::: ', typeof i);
-    if (!isNaN(i)) {
-        
-        console.log('i::: ', i);
-        
-        
-        
-    }
-    
-}
+let a=2,b=3
 pas = 1
