@@ -1,52 +1,61 @@
 class Solution {
     /**
-     * @param {number[]} prices
+     * @param {string} s
      * @return {number}
      */
-    maxProfit(prices) {
-        if (prices.length == 1) {
+    lengthOfLongestSubstring(s) {
+        if (s.length == 0) {
             return 0
 
         }
-        let l = prices[0], r = prices[1]
-        let max = prices[l] < prices[r] ? prices[r] - prices[l] : 0
-        for (let i = 1; i < prices.length; i++) {
-            const el = prices[i]
-            let cur = r - l
-            max = max < cur ? cur : max
-            // if (el == 10) {
-            //     let a = 12
-            // }
-            if (el > r) {
-                r = el
-            }
-            if (el < l && i != prices.length - 1) {
-                l = el
-                r = prices[i + 1]
+        let char_set = new Set()
+        let max = 1
+        for (let i = 0; i < s.length; i++) {
+            const el = s[i];
+            if (!char_set.has(el)) {
+                char_set.add(el)
             }
 
+            else {
+                max = max < char_set.size ? char_set.size : max
+                for (let j = i - char_set.size; j < i + char_set.size; j++) {
+                    const el_set = s[j];
+                    if (el_set == el) {
+                        for (let k = i - char_set.size; k < j + 1; k++) {
+                            const el_for_del = s[k];
+                            char_set.delete(s[k])
+
+                        }
+                        char_set.add(el)
+                        break
+                        // let cur_str=s.slice(j+1,i+char_set.length)
+                    }
+                }
+            }
+
+
+
+
         }
-        let cur = r - l
-        max = max < cur ? cur : max
+        max = max < char_set.size ? char_set.size : max
 
         return max
     }
 }
 
 
+
+
+
 // 
 a = new Solution()
 // 
 
-prices = [10, 1, 5, 6, 7, 1]
-prices = [7, 1, 5, 3, 6, 4]
+s = "zxyzxyz"
+s = "xxxx"
+s = "pwwkew"
+s="au"
+// s = "1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7A8B9C0D1E2F3G4H5I6J7K8L9M0N1O2P3Q4R5S6T7U8V9W0X1Y2Z3"
 
-prices = [2, 1, 2, 1, 0, 1, 2]
-
-prices = [1, 2, 11, 4, 7]
-prices = [10, 8, 7, 5, 2]
-prices = [5, 1, 5, 6, 7, 1, 10]
-
-console.log('Задача ответ::: ', a
-    .maxProfit(prices));
+console.log('Задача ответ::: ', a.lengthOfLongestSubstring(s), '   а надо 21');
 
