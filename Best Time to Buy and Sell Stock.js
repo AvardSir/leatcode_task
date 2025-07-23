@@ -1,127 +1,65 @@
 class Solution {
     /**
-     * @param {number[]} height
+     * @param {number[]} prices
      * @return {number}
      */
-    trap(height) {
-        let l = 0
-        let r = 1
+    maxProfit(prices) {
 
-        // for (let i = 0; i < height.length; i++) {
-        //     const element = height[i];
-        //     if (height[i] !=) {
-
-        //     }
-        // }
-        let max = height[0], max_idx = 0
-        for (let i = 1; i < height.length; i++) {
-            const element = height[i];
-            if (max < height[i]) {
-                max = height[i]
-                max_idx = i
+        let l = 0, r = prices.length - 1
+        let max = prices[r] - prices[l]
+        let cur=0
+        while (l < r) {
+            let next_l = l + 1
+            let dif_l =   prices[next_l]-prices[l]
+            if (dif_l <= 0) {
+                l++
+                cur = prices[r] - prices[l]
+                max = max < cur ? cur : max
+                continue
             }
 
-        }
-        let height_reverse = height.slice(max_idx , height.length)
-        for (let i = 0; i < height_reverse.length; i++) {
-            const element = height_reverse[i];
-            height_reverse[i] = height[height.length - 1 - i]
+            // if (l==4||r==4) {
+            //     let a=2
+            // }
 
-        }
+            // если право>лево плохо
+            let next_r = r - 1
+            let dif_r = prices[r]-prices[next_r] 
+            if (dif_r <= 0) {
+                r--
+                cur = prices[r] - prices[l]
+                max = max < cur ? cur : max
+                continue
+            }
+            if (dif_l <= dif_r) {
 
-
-        let total_water = 0
-        let cur_water=0
-        while (l <= max_idx) {
-
-            if (height[l] > height[r]) {
-                cur_water = height[l] - height[r]
-                // стартуем 3 1 2 или 2 1 3 ну короч ищем выбоину
-                r++
-                while (r <= max_idx) {
-
-                    if (height[l] <= height[r]) {
-
-                        // r конец нашла правый конец выбоины.
-                        total_water += cur_water
-                        l = r
-                        r++
-                        break
-                    }
-                    cur_water += height[l] - height[r]
-                    r++
-
-
-                }
-
+                l++
+                cur = prices[r] - prices[l]
+                max = max < cur ? cur : max
             }
             else {
-                // 1 2 или 1 3 
-                l++
-                r++
+                r--
+                cur = prices[r] - prices[l]
+                max = max < cur ? cur : max
             }
         }
-        // total_water += cur_water
-        cur_water=0
-        l = r
-        r++
 
-
-        l = 0
-        r = 1
-        while (l < height_reverse.length ) {
-
-            if (height_reverse[l] > height_reverse[r]) {
-                let cur_water = height_reverse[l] - height_reverse[r]
-                // стартуем 3 1 2 или 2 1 3 ну короч ищем выбоину
-                r++
-                while (r < height_reverse.length ) {
-
-                    if (height_reverse[l] <= height_reverse[r]) {
-
-                        // r конец нашла правый конец выбоины.
-                        total_water += cur_water
-                        l = r
-                        r++
-                        cur_water=0
-                        break
-                    }
-                    cur_water += height_reverse[l] - height_reverse[r]
-                    r++
-
-
-                }
-            }
-            else {
-                // 1 2 или 1 3 
-                l++
-                r++
-            }
-        }
-        // total_water += cur_water
-
-        // справо налево
-        return total_water
+        return max
     }
 }
-
-
-
-
-
 
 
 // 
 a = new Solution()
 // 
 
-height = [0, 2, 0, 3, 1, 0, 1, 3, 2, 1]
-height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
-height = [4,2,0,3,2,5]
-height=[0,2,0,3,1,0,1,3,2,1]
+prices = [10, 1, 5, 6, 7, 1]
+prices=[7,1,5,3,6,4]
 
-height=[6,4,2,0,3,2,0,3,1,4,5,3,2,7,5,3,0,1,2,1,3,4,6,8,1,3]
+prices=[2,1,2,1,0,1,2]
 
+prices=[1,2,11,4,7]
 
-console.log('Задача ответ::: ', a.trap(height));
+console.log('Задача ответ::: ', a
+    .maxProfit(prices));
 
