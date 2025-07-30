@@ -5,48 +5,52 @@ class Solution {
      * @return {number}
      */
     findMedianSortedArrays(nums1, nums2) {
+        if (nums1.length == 0) {
+            let l1 = 0, r1 = nums2.length - 1
+            let chet = (nums2[Math.floor((r1 - l1) / 2) + 1] + nums2[Math.floor((r1 - l1) / 2)]) / 2
+            return nums2.length % 2 != 0 ? nums2[Math.floor((r1 - l1) / 2)] : chet
+        }
+        if (nums2.length == 0) {
+            let l1 = 0, r1 = nums1.length - 1
+            let chet = (nums1[Math.floor((r1 - l1) / 2) + 1] + nums1[Math.floor((r1 - l1) / 2)]) / 2
+            // console.log('nums1[Math.floor((r1 - l1) / 2)]::: ', nums1[Math.floor((r1 - l1) / 2)]);
+            // console.log('nums1 % 2 != 0::: ', nums1 % 2 != 0);
+
+            return nums1.length % 2 != 0 ? nums1[Math.floor((r1 - l1) / 2)] : chet
+        }
 
         function nums_len_less_2(nums1, nums2) {
+            let nums_more = 0
+            let nums_one = 0
             if (nums1.length > nums2.length) {
-                let nums_more = nums1
-                let nums_one = nums2
+                nums_more = nums1
+                nums_one = nums2
             }
             else {
-                let nums_more = nums2
-                let nums_one = nums1
+                nums_more = nums2
+                nums_one = nums1
             }
 
-            // nums_more
             let taget = nums_one
-
-            // 's'.length
-            // if (nums_more[r] == taget) {
-
-            //     // 1 1 2 3 
-
-            //     // 1 2 3 4
-            //     let Nechet = (nums_more[Math.floor(nums_more.length / 2) - 1] + nums_more[Math.floor(nums_more.length / 2)]) / 2
-
-            //     let chet = nums_more[Math.floor(nums_more.length / 2) - 1]
-            //     return nums_more.length % 2 != 0 ? Nechet :
-            // }
-
-            // TODO: сделай случай проверки nums_more[l]
-            let l = 0, r = nums_more.length
-            let mid = l + Math.floor((r - l) / 2)
-            while (l != r - 1) {
-                mid = l + Math.floor((r - l) / 2)
-                if (taget < nums_more[mid]) {
-                    r = mid
+            let l = 0, r = nums_more.length - 1
+            if (nums_more.length % 2 == 0) {
+                r = nums_more.length - 1
+                l = 0 + Math.floor((r) / 2)
+                // nums_more[l]
+                if (nums_one <= nums_more[l]) {
+                    return nums_more[l]
                 }
-                if (taget > nums_more[mid]) {
-                    l = mid
+                if (nums_more[l] < nums_one && nums_one < nums_more[l + 1]) {
+                    return nums_one[0]
                 }
-                if (taget == nums_more[mid]) {
+                if (nums_one >= nums_more[l + 1]) {
+                    return nums_more[l + 1]
+                }
+                let ar = 1
 
-                }
 
             }
+
         }
 
         if (nums1.length == 1 || nums2.length == 1) {
@@ -63,7 +67,7 @@ class Solution {
                 return n % 2 != 0 ? nums1[len_left] : chet
             }
             else if (len_left == nums1.length) {
-
+                return (nums1[nums1.length - 1] + nums2[0]) / 2
             }
             else if (len_left > nums1.length) {
                 len_left = len_left - nums1.length
@@ -116,6 +120,7 @@ class Solution {
                 l1 = mid1
             }
             else if (nums1[mid1] > nums2[r2 + 1]) {
+                r1= mid1
                 let pas = 1
             }
             else if ((nums1[mid1] <= nums2[r2 + 1]) && (nums2[r2] <= nums1[mid1 + 1])) {
@@ -150,7 +155,23 @@ nums1 = [1, 2, 3, 7], nums2 = [1, 2, 3, 6]
 // nums1 = [1, 2, 3, 4], nums2 = [1, 5, 7, 8]
 // nums1 = [1, 2, 3, 4], nums2 = [5, 7, 8]
 // nums1 = [1, 2, 3], nums2 = [1, 2, 3]
+
 nums1 = [1, 3]
 nums2 = [2]
 
+
+
+// не решает вообще разобрать
+nums1 = [1, 2]
+nums2 = [3, 4]
+
+nums1 = []
+nums2 = [1]
+
+nums1 = [2]
+nums2 = []
+
+
+nums1=[1,4,7]
+nums2=[2,3,5,6]
 console.log('Задача ответ::: ', a.findMedianSortedArrays(nums1, nums2));
