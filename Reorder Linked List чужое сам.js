@@ -14,25 +14,64 @@ class Solution {
      * @return {void}
      */
     reorderList(head) {
-        // console.log('head::: ', head);
+        let cur = head
+        let s = head, f = head
 
-        let start_head = head
-        let arr_head = [head]
+        // console.log('::1: ');
+        while (f.next) {
+            s = s.next
 
-        // while (start_head.next != null) {
-        //     start_head = start_head.next
-        //     arr_head.push(start_head)
-        // }
-        let head_next = 0
-        // console.log('head_next::: ', head_next);
-        for (let i = 0; i < Math.floor(arr_head.length); i++) {
 
-            head_next = head.next
-            // head.next = arr_head[arr_head.length - 1 - i]
-            head.next.next=head_next
-            head = head.next.next
+            if (!f.next.next) {
+                f = f.next
+                break
+            }
+            f = f.next.next
+
+
+
         }
-        return
+        console.log('s::: ', s.val);
+
+        // console.log('::2: ');
+
+        // крч проблема если list четный по length
+        // то тогда s=должен быть правей
+
+        // если нечетный тоже? проверь
+
+        // 2й этап от конца до середины стрелки
+        // поменять направления
+        // let cur_s = s
+        // let prev_s = s
+        // let next_s
+        // if (cur_s.next) {
+        //     cur_s = cur_s.next
+        //     next_s = cur_s.next
+
+        // }
+
+        // prev_s.next = null
+        // while (true) {
+        //     if (cur_s == f) {
+        //         cur_s.next = prev_s
+        //         console.log('cur_s::: ', cur_s);
+        //         break
+        //     }
+        //     console.log('cur_s::: ', cur_s);
+
+        //     next_s = cur_s.next
+        //     cur_s.next = prev_s
+        //     prev_s = cur_s
+        //     cur_s = cur_s.next
+        // }
+
+
+        // 3й этап  сбор всего
+        // while (cur != s) {
+        //     cur
+        // }
+
 
     }
 }
