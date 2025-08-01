@@ -1,32 +1,48 @@
-/**
- * @param {number[]} height
- * @return {number}
- */
-var maxArea = function(height) {
-    if (height.length<2) {
-        return 0
-    }
-    let start=0
-    let end=height.length-1
-    function volum(start,end) {
-        
-        let height_Vol=Math.min(height[start],height[end])
-        let width=end-start
-        return height_Vol*width
-    }
-    let max_height=volum(0,1)
-    // for (let i = 0; i < height.length; i++) {
-    //     // const element = height[i];
-        
-    //     max_height=Math.max(volum(start,end),max_height)
-    //     // height[i]
-    // }
-    while (start<end) {
-        max_height=Math.max(volum(start,end),mмax_height)
+class Solution {
+    /**
+     * @param {number[]} heights
+     * @return {number}
+     */
+    maxArea(heights) {
+        let l = 0, r = heights.length - 1
 
-        start++
-        end--
-    }
+        let h1 = heights[0] > heights[1] ? heights[1] : heights[0]
+        let max = h1
+        while (r > l) {
 
-    return max_height
-};
+            if (heights[l] >= heights[r]) {
+                let cur = heights[r] * (r - l)
+                max = max < cur ? cur : max
+
+                r--
+            }
+            else {
+                let cur = heights[l] * (r - l)
+                max = max < cur ? cur : max
+
+                l++
+            }
+
+        }
+
+        return max
+    }
+}
+
+
+
+
+
+
+
+
+// 
+a = new Solution()
+// 
+
+height = [1, 7, 2, 5, 4, 7, 3, 6]
+
+
+
+console.log('Задача ответ::: ', a.maxArea(heights));
+

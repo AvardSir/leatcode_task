@@ -1,31 +1,65 @@
-/**
- * @param {number[]} prices
- * @return {number}
- */
-var maxProfit = function(prices) {
-    // dif=[[]]
-    const n = prices.length; // Количество строк
-    const m = prices.length; // Количество столбцов
+class Solution {
+    /**
+     * @param {number[]} prices
+     * @return {number}
+     */
+    maxProfit(prices) {
 
-    const dif = Array.from({ length: n }, () => Array(m).fill(0));
-    for (let i = 0; i < prices.length - 1; i++) {
-        const element = prices[i];
-        for (let j = i + 1; j < prices.length; j++) {
-            const element = prices[j];
-            if (i != j && prices[i] < prices[j]) {
-                dif[i].push(prices[j] - prices[i]);
+        let l = 0, r = prices.length - 1
+        let max = prices[r] - prices[l]
+        let cur=0
+        while (l < r) {
+            let next_l = l + 1
+            let dif_l =   prices[next_l]-prices[l]
+            if (dif_l <= 0) {
+                l++
+                cur = prices[r] - prices[l]
+                max = max < cur ? cur : max
+                continue
+            }
+
+            // if (l==4||r==4) {
+            //     let a=2
+            // }
+
+            // если право>лево плохо
+            let next_r = r - 1
+            let dif_r = prices[r]-prices[next_r] 
+            if (dif_r <= 0) {
+                r--
+                cur = prices[r] - prices[l]
+                max = max < cur ? cur : max
+                continue
+            }
+            if (dif_l <= dif_r) {
+
+                l++
+                cur = prices[r] - prices[l]
+                max = max < cur ? cur : max
+            }
+            else {
+                r--
+                cur = prices[r] - prices[l]
+                max = max < cur ? cur : max
             }
         }
-    }
-    for (let i = 0; i < dif.length; i++) {
-        const element = dif[i];
-        dif[i] = Math.max(...dif[i]);
-    }
-    const answer = Math.max(...dif);
-    return answer;
-};
 
-// Пример использования
-const prices = [7, 4, 5, 3, 2, 4];
-const result = maxProfit(prices);
-console.log(result); // Вывод: 5 (покупка по 1 и продажа по 6)
+        return max
+    }
+}
+
+
+// 
+a = new Solution()
+// 
+
+prices = [10, 1, 5, 6, 7, 1]
+prices=[7,1,5,3,6,4]
+
+prices=[2,1,2,1,0,1,2]
+
+prices=[1,2,11,4,7]
+
+console.log('Задача ответ::: ', a
+    .maxProfit(prices));
+

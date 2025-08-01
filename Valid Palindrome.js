@@ -1,44 +1,45 @@
-/**
- * @param {string} s
- * @return {boolean}
- */
-// мое решение
-// var isPalindrome = function(s) {
-//     console.log(s)
-//     s=s.toLowerCase()
-//     s=s.match(/[a-z0-9]/g);
-//     if (!s){return true}
-//     console.log(s)
-//     // s = s.match(/[a-zA-Z]/g);
-//     let len=s.length
-//     const mid_len=Math.floor(len/2)
-//     len--
-//     for (let i = 0; i < mid_len; i++) {
-//         if (s[i]!=s[len-i]){
-//             console.log(s[i], '   ',s[len-i])
-//             return false
-//         }
-//         // const element = s[i];
+class Solution {
+    /**
+     * @param {string} s
+     * @return {boolean}
+     */
+    isPalindrome(s) {
+        s = s.toLowerCase()
+
+        let chars = ` '"+-?/.,:`.split('')
+        s=s.split('')
+        s = s.filter(x => !chars.includes(x))
+
         
-//     }
-//     return true
+        let left = 0
+        let right = s.length - 1
+        while (left < right) {
+            if (s[left] != s[right]) {
+                console.log('s[right]::: ', s[right]);
+                console.log('s[left]::: ', s[left]);
+                return false
+            }
+            left++
+            
 
-// };
+            right--
+            
+
+        }
+        return true
+    }
+}
 
 
-// чужое лол чуть хуже по времени
-// var isPalindrome = function(s) {
-//     s = s.toLowerCase().replace(/[^a-z0-9]/g, '');
-//     let left = 0;
-//     let right = s.length - 1;
 
-//     while (left < right) {
-//         if (s[left] !== s[right]) {
-//             return false;
-//         }
-//         left++;
-//         right--;
-//     }
 
-//     return true;    
-// };
+
+
+// 
+a = new Solution()
+// 
+
+s = "Was it a car or a cat I saw?"
+s="Madam, in Eden, I'm Adam"
+console.log('Задача ответ::: ', a.isPalindrome(s));
+

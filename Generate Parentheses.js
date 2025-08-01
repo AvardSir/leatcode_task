@@ -1,63 +1,51 @@
-/**
- * @param {number} n
- * @return {string[]}
- */
-var generateParenthesis = function(n) {
-    function bracket_ckec(bracket) {
-        if (bracket.length%2!=0){return false}
-        //bracket is a string
-        // const cashe=[]
-        let counter=0
-        for (let i = 0; i < bracket.length; i++) {
-            if (bracket[i]==')' && counter==0){
-                return false
-    
-            }
-            else if (bracket[i]=='(' ){
-                // cashe.push(')')
-                counter++
-            }
-            else if (bracket[i]==')' && counter>0) {
-                // cashe[cashe.length-1]='_'
-                counter--
-            }
-            const element = bracket[i];
-            
+class Solution {
+    /**
+     * @param {number} n
+     * @return {string[]}
+     */
+    generateParenthesis(n) {
+        let ans = []
+        let stack_left = []
+        for (let i = 0; i < n; i++) {
+            stack_left.push('(')
+
         }
-        if (counter>0){return false}
-        return true
-        
-    }
-    function bkacket_combinations(n) {
-        let arr=[['(',')']]
-        for (let i = 1; i < n; i++) {
-            arr.push([])//[[0,1],[]]
-            for (let j = 0; j < 2; j++) {
-                for (let z = 0; z < arr[i-1].length; z++) {
-                    // const element = array[z];
-                    arr[i].push(arr[0][j]+arr[i-1][z])
-                    
-                }
-                
+        let stack_right = []
+        let str = ''
+        function dfs(str, stack_left, stack_right) {
+
+            if (stack_left.length == 0 && stack_right.length == 0) {
+                ans.push(str)
+                return
             }
+
+            if (stack_left.length != 0) {
+
+                // str += stack_left.pop()
+                // stack_right.push(')')
+                let pop_l = stack_left.slice(0, stack_left.length - 1)
+                // let push_r=
+                // dfs(str, [...stack_left], [...stack_right])
+                dfs(str + stack_left[stack_left.length - 1], [...pop_l], [...stack_right,')'])
+
+
+            }
+            if (stack_right.length != 0) {
+
+                // str += stack_right.pop()
+                let pop_r = stack_right.slice(0, stack_right.length - 1)
+                dfs(str + stack_right[stack_right.length - 1], [...stack_left], [...pop_r])
+            }
+
         }
-        
-    
-        return arr
+        dfs(str, stack_left, stack_right)
+        return ans
     }
-    n=bkacket_combinations(n*2)
-    n=n[n.length-1].filter(bracket_ckec)
-    return n
+}
 
-};
+// оно работате
+a = new Solution()
+n = 1
 
+console.log('a.productExceptSelf(tescae1)::: ', a.generateParenthesis(n));
 
-
-
-// let n=4
-// let a=bkacket_combinations(n)
-
-// bracket%2!=0
-// let bracket='(()))('
-// let aba=bracket_ckec(bracket)
-// let b=3
