@@ -1,11 +1,46 @@
-let ar=[1,4,3]
-ar.sort((a, b) => a - b)
-// ar.pop(22)
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     constructor(val = 0, next = null) {
+ *         this.val = val;
+ *         this.next = next;
+ *     }
+ * }
+ */
 
-let str='ab'
-let a=str.includes('c')
+class Solution {
+    /**
+     * @param {ListNode} head
+     * @param {number} n
+     * @return {ListNode}
+     */
+    removeNthFromEnd(head, n) { }
+}
 
-let chars=` +-?/.,:`.split('')
-// ar=ar.filter(x=>!chars.includes(x))
-let maaax=Math.max(...ar)
-pas = 1
+class ListNode {
+    constructor(val = 0, next = null) {
+        this.val = val;
+        this.next = next;
+    }
+}
+
+let a1 = new ListNode(1)
+let a2 = new ListNode(2, a1)
+let a3 = new ListNode(3, a2)
+let step = a3
+let arr = [a1, a2, a3]
+arr[1].next = null
+while (step) {
+    console.log('step::: ', step);
+    step = step.next
+
+}
+
+
+// 
+a = new Solution()
+// 
+
+
+nums2 = [2, 3, 5, 6]
+console.log('Задача ответ::: ', a.findMedianSortedArrays(nums1, nums2));

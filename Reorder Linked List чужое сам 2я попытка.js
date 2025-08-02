@@ -14,10 +14,13 @@ class Solution {
      * @return {void}
      */
     reorderList(head) {
+        if (head.next===null) {
+            return
+        }
         let cur = head
         let s = head, f = head
 
-        console.log('::1: ');
+        // console.log('::1: ');
         while (f.next) {
             s = s.next
             if (!f.next.next) {
@@ -26,7 +29,7 @@ class Solution {
             }
             f = f.next.next
         }
-        // console.log('s::: ', s.val);
+        console.log('s::: ', s.val);
 
         let s_next, s_prev, s_cur = s
         s_next = s.next
@@ -51,12 +54,18 @@ class Solution {
             console.log('cur::: ', cur.val);
 
             if (cur === s) {
+                // console.log('ыафаы::: ', cur.val);
                 break
             }
             next_cur = cur.next // 2
-            cur.next = s_cur
 
             s_next = s_cur.next
+
+            cur.next = s_cur
+            if (s_cur === s) {
+                // console.log('ыафаы::: ', cur.val);
+                break
+            }
 
             s_cur.next = next_cur
             s_cur = s_next
@@ -66,8 +75,27 @@ class Solution {
         }
 
 
-        console.log('s_cur::: ', s_cur);
-        console.log('s_cur.next::: ', s_cur.next);
+
+
+        // let head2 = head
+
+        // console.log('head2::: ', head2);
+
+        // while (true) {
+        //     if (head2.next == null) {
+        //         // head2.val
+        //         console.log('head2.val::: ', head2.val);
+        //         break
+        //     }
+        //     console.log('head2.val::: ', head2.val);
+        //     head2 = head2.next
+        // }
+
+        // console.log('cur::: ', cur.val);
+
+
+        // console.log('s_cur::: ', s_cur);
+        // console.log('s_cur.next::: ', s_cur.next);
 
         return
     }
