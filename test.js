@@ -38,4 +38,22 @@ function arrayToTree(arr) {
 // Пример использования
 const rootArray = [4, 2, 7, 1, 3, 6, 9];
 let tree = arrayToTree(rootArray)
+
+
+// let arr = [1, 2, 3]
+// while (arr.length) {
+//     // arr.pop()
+//     console.log('arr.pop()::: ', arr.pop());
+// }
+let ar2 = [3, 4, 5]
+let [third, ...other] = ar2
+console.log('other::: ', other);
+console.log('third::: ', third);
+
+let ar3 = [1, 2]
+ar3.unshift(3)
+ar3.push(4)
+
+let arIndexToDel = [0, 3]
+ar3 = ar3.filter((v, i) => arIndexToDel.includes(i))
 let pas = 12
