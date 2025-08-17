@@ -11,62 +11,66 @@
 
 class Solution {
     /**
-     * @param {TreeNode} p
-     * @param {TreeNode} q
+     * @param {TreeNode} root
+     * @param {TreeNode} subRoot
      * @return {boolean}
      */
-    isSameTree(p, q) {
-        // console.log('p::: ', p);
-
-        if (p === null && null === q) {
+    isSubtree(root, subRoot) {
+        if (!subRoot) {
             return true
         }
-        if (!p && q || !q && p) {
+        if (!root) {
             return false
         }
-        if (p.val != q.val) {
-            return false
-        }
-        let mp = new Map()
-        mp.set(null, 0)
-        let stack_P = [p]
-        let stack_Q = [q]
-        while (stack_P.length || stack_Q.length) {
-            let curP = stack_P.shift()
-            let curQ = stack_Q.shift()
-            console.log('stack_Q::: ', stack_Q);
-            console.log('stack_P::: ', stack_P);
+        function compare(q, p) {
 
-            if (curP === curQ === null) {
-                // все ок левые ==null
-            }
-            else if (!curP && curQ || !curQ && curP) {
-                return false
-            }
-            else if (curP.val === curQ.val) {
-                // все ок значения левых равны
-            }
-            else {
-                return false
-            }
-            if (curP.left || curQ.left) {
-                // console.log('curP.left::: ', curP.left);
 
-                // console.log('curP::: ', curP);
-                stack_P.push(curP.left)
-                stack_Q.push(curQ.left)
+            let stack = [[q, p]]
+            while (stack.length) {
+                let [q, p] = stack.shift()
+                // console.log('p::: ', p);
+                // console.log('q::: ', q);
+                if (q === null && p === null) {
+                }
+                else if (q && !p || !q && p) {
+
+                    return false
+                }
+                else if (q.val !== p.val) {
+                    return false
+                }
+
+                if (q.left || p.left) {
+                    stack.push([q.left, p.left])
+                }
+                if (q.right || p.right) {
+                    stack.push([q.right, p.right])
+                }
             }
-            if (curP.right || curQ.right) {
-                // console.log('curP.right::: ', curP.right);
-                stack_P.push(curP.right)
-                stack_Q.push(curQ.right)
-            }
+            return true
 
         }
 
-        return true
+        let stack = [root]
+        while (stack.length) {
+            let curNode = stack.pop()
+            if (curNode.val == subRoot.val) {
+                if (compare(curNode, subRoot)) {
+                    return true
+                }
+            }
+            if (curNode.left) {
+                stack.push(curNode.left)
+            }
+            if (curNode.right) {
+                stack.push(curNode.right)
+            }
+        }
+        return false
+
     }
 }
+
 
 
 class TreeNode {
@@ -108,5 +112,7 @@ let a = new Solution()
 
 root = [4, 2, 7, 1, 3, 6, 9]
 root = arrayToTree(root)
+let root2 = [1, 2, 7, 1, 3, 6, 9]
+root2 = arrayToTree(root)
 
-console.log('Ответ::: ', a.invertTree(root));
+console.log('Ответ::: ', a.isSubtree(root, root2));
