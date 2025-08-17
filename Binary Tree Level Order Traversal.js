@@ -14,7 +14,32 @@ class Solution {
      * @param {TreeNode} root
      * @return {number[][]}
      */
-    levelOrder(root) {}
+    levelOrder(root) {
+        if (!root) {
+            return []
+        }
+        let parent = [root]
+        let child = []
+        let ans = []
+        while (parent.length) {
+            for (let i = 0; i < parent.length; i++) {
+                let curNode = parent[i];
+                if (curNode.left) {
+                    child.push(curNode.left)
+                }
+                if (curNode.right) {
+                    child.push(curNode.right)
+                }
+            }
+            parent = parent.map(x => x.val)
+            ans.push(parent)
+            // console.log('parent::: ', parent);
+            parent = child
+            child = []
+        }
+
+        return ans
+    }
 }
 
 
