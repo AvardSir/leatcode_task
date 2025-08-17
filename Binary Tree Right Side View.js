@@ -12,34 +12,27 @@
 class Solution {
     /**
      * @param {TreeNode} root
-     * @return {number[][]}
+     * @return {number[]}
      */
-    levelOrder(root) {
+    rightSideView(root) {
         if (!root) {
             return []
         }
-        let stack = [root]
         let ans = []
-        while (stack.length) {
-            ans.push([])
-            let n = stack.length
-            for (let i = 0; i < n; i++) {
-                // const element = stack[i];
-                let curNode = stack.shift()
-                if (curNode.left) {
-                    stack.push(curNode.left)
-                }
-                if (curNode.right) {
-                    stack.push(curNode.right)
-                }
-                ans[ans.length - 1].push(curNode.val)
-            }
-
-
+        let prev
+        while (root) {
+            // console.log('root::: ', root);
+            ans.push(root.val)
+            prev = root
+            root = root.right
+        }
+        if (prev.left) {
+            ans.push(prev.left.val)
         }
         return ans
     }
 }
+
 
 
 
