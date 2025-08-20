@@ -12,54 +12,27 @@
 class Solution {
     /**
      * @param {number[]} preorder
-     * @param {number[]} In
+     * @param {number[]} inorder
      * @return {TreeNode}
      */
-    buildTree(In, preorder) {
-        if (preorder.length == 0 || In.length == 0) {
-            return null
-        }
-        let Pre = [...preorder]
-        let i = 0
-        let root = new TreeNode(In[i])
-        function dfs(root, Pre) {
-            console.log('Pre::: ', Pre);
-            console.log('i::: ', i);
+    buildTree(preorder, inorder) {
+        let preIdx = 0,
+            inIdx = 0;
 
-            console.log('In[i]::: ', In[i]);
-            if (Pre.length == 1) {
-                return
+        function dfs(limit) {
+            if (preIdx >= preorder.length) return null;
+            if (inorder[inIdx] === limit) {
+                inIdx++;
+                return null;
             }
-            let i_Pre
-            for (let j = 0; j < Pre.length; j++) {
-                const element_Pre = Pre[j];
-                if (element_Pre == In[i]) {
-                    console.log('element_Pre::: ', element_Pre);
-                    i_Pre = j
-                    console.log('i_Pre::: ', i_Pre);
-                    break
-                }
 
-            }
-            if (i_Pre != 0) {
-                // есть левое
-                let left_Pre = Pre.slice(0, i_Pre)
-                i++
-                root.left = new TreeNode(In[i])
-                dfs(root.left, left_Pre)
-            }
-            if (i_Pre != Pre.length - 1) {
-                // есть правое
-                let right_Pre = Pre.slice(i_Pre + 1, Pre.length)
-                i++
-                root.right = new TreeNode(In[i])
-                dfs(root.right, right_Pre)
-            }
+            let root = new TreeNode(preorder[preIdx++]);
+            root.left = dfs(root.val);
+            root.right = dfs(limit);
+            return root;
         }
 
-        dfs(root, Pre)
-
-        return root
+        return dfs(Infinity);
     }
 }
 

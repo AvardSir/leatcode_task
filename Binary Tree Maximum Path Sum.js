@@ -11,58 +11,44 @@
 
 class Solution {
     /**
-     * @param {number[]} preorder
-     * @param {number[]} In
-     * @return {TreeNode}
+     * @param {TreeNode} root
+     * @return {number}
      */
-    buildTree(In, preorder) {
-        if (preorder.length == 0 || In.length == 0) {
-            return null
+    maxPathSum(root) {
+
+        let mp = new Map()
+        mp.set(null, 0)
+        let stack = [root]
+        let max_path = -Infinity
+        while (stack.length) {
+            let curNode = stack[stack.length - 1]
+
+            if (!mp.has(curNode.left)) {
+                stack.push(curNode.left)
+            }
+            if (!mp.has(curNode.right)) {
+                stack.push(curNode.right)
+            }
+            if (mp.has(curNode.right) && mp.has(curNode.left)) {
+                curNode = stack.pop()
+
+                let [l, r] = [mp.get(curNode.left), mp.get(curNode.right)]
+                // console.log('l::: ', l);
+                let sum = l + r + curNode.val
+                // console.log('sum::: ', sum);
+                let h = Math.max(Math.max(l, r) + curNode.val, curNode.val)
+                // console.log('h::: ', h);
+
+                max_path = Math.max(h, sum, max_path)
+                // console.log('max_path::: ', max_path);
+
+                mp.set(curNode, h)
+            }
+
         }
-        let Pre = [...preorder]
-        let i = 0
-        let root = new TreeNode(In[i])
-        function dfs(root, Pre) {
-            console.log('Pre::: ', Pre);
-            console.log('i::: ', i);
-
-            console.log('In[i]::: ', In[i]);
-            if (Pre.length == 1) {
-                return
-            }
-            let i_Pre
-            for (let j = 0; j < Pre.length; j++) {
-                const element_Pre = Pre[j];
-                if (element_Pre == In[i]) {
-                    console.log('element_Pre::: ', element_Pre);
-                    i_Pre = j
-                    console.log('i_Pre::: ', i_Pre);
-                    break
-                }
-
-            }
-            if (i_Pre != 0) {
-                // есть левое
-                let left_Pre = Pre.slice(0, i_Pre)
-                i++
-                root.left = new TreeNode(In[i])
-                dfs(root.left, left_Pre)
-            }
-            if (i_Pre != Pre.length - 1) {
-                // есть правое
-                let right_Pre = Pre.slice(i_Pre + 1, Pre.length)
-                i++
-                root.right = new TreeNode(In[i])
-                dfs(root.right, right_Pre)
-            }
-        }
-
-        dfs(root, Pre)
-
-        return root
+        return max_path
     }
 }
-
 
 
 class TreeNode {
