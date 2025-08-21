@@ -1,18 +1,25 @@
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     constructor(val = 0, left = null, right = null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 
 class Codec {
-    /**
-     * Encodes a tree to a single string.
-     *
-     * @param {TreeNode} root
-     * @return {string}
-     */
+
     serialize(root) {
+
+
         if (!root) return '';
 
         let stack = [root]
         let ans_str = ''
 
-        // TODO: Runtime Error (NZEC)
+        // TODO: Runtime Error(NZEC)
 
         // узнать у дипсик почему
 
@@ -21,32 +28,27 @@ class Codec {
             for (let i = 0; i < n; i++) {
                 let curNode = stack.shift()
                 if (curNode) {
-                    ans_str = ans_str + '$' + curNode.val.toString();
+                    ans_str = ans_str + curNode.val.toString() + '$';
 
                     stack.push(curNode.left)
                     // console.log('stack::: ', stack);
                     stack.push(curNode.right)
                 }
                 else {
-                    ans_str = ans_str + '$' + '#'
+                    ans_str = ans_str + '#' + '$'
                 }
             }
         }
         return ans_str
     }
 
-    /**
-     * Decodes your encoded data to tree.
-     *
-     * @param {string} data
-     * @return {TreeNode}
-     */
+
     deserialize(data) {
         if (data == '') {
             return null
         }
         data = data.split('$')
-        data.shift() //убрать лишний элемент сначала
+        // data.shift() //убрать лишний элемент сначала
 
         let root = data.shift()
         if (!isNaN(root)) {
@@ -80,9 +82,7 @@ class Codec {
 
             i++
 
-            // нужно пойти в левый
         }
-        // console.log('root::: ', root);
 
         return root
     }
@@ -130,12 +130,12 @@ let a = new Codec()
 root = [4, 2, 7, 1, 3, 6, 9]
 root = arrayToTree(root)
 
-root = [1, 2, 3]
+root = [1, 2, -3]
 root = arrayToTree(root)
 let root2 = [1, 2, 7, 1, 3, 6, 9]
 root2 = arrayToTree(root2)
 
-root.left = null
+// root.left = null
 let root3 = a.serialize(root)
 
 // deserialize(root3)
