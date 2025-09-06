@@ -58,6 +58,7 @@ class WordDictionary {
                         const childNode = children[j][1];
                         console.log('childNode::: ', childNode);
                         console.log('i::: ', i);
+                        // тут гдет проблемы
 
                         dfs(childNode, i)
                     }
