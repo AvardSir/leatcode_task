@@ -51,102 +51,77 @@ class KthLargest {
      * @return {number}
      */
     add(val) {
-        if (this.k != 0) {
-            // TODO: доделай случай k!=0
-
-            this.k--
-
-            // блок кода не чистый
-            if (val > this.start.val) {
-
-                let curNode = this.start
-                let curVal = curNode.val
-
-                while (true) {
-                    if (curNode.next) {
-                        if (curVal <= val && val < curNode.next.val) {
-                            let nexPrev = curNode.next
-
-                            curNode.next = new ListNode(val)
-                            curNode = curNode.next
-
-                            curNode.next = nexPrev
-                            break
-                        }
-                        else {
-                            curNode = curNode.next
-                            curVal = curNode.val
-                        }
-                    }
-                    else {
-
-                        // нету следующего. 
-
-                        curNode.next = new ListNode(val)
-                        break
-                    }
-                }
-                // this.start = this.start.next
-
-
-
+        if (!this.start) {
+            if (this.k > 0) {
+                this.start = new ListNode(val)
+                this.k--
+                return this.start.val
             }
             else {
-                // значение меньше вроде ничего не делаем
+                return
             }
         }
-        else if (val > this.start.val) {
+        if (this.k != 0 && val < this.start.val) {
+            let prevStart = this.start
+            this.start = new ListNode(val)
+            this.start.next = prevStart
+            this.k--
+            return this.start.val
+        }
+        else if (this.k == 0 && val <= this.start.val) {
+            return this.start.val
+        }
 
-            let curNode = this.start
-            let curVal = curNode.val
-            // let prevNode = null
 
-            while (true) {
+        let curNode = this.start
+        let prevNode = curNode
+        while (true) {
+            if (val > curNode.val) {
                 if (curNode.next) {
-                    if (curVal <= val && val < curNode.next.val) {
-                        let nexPrev = curNode.next
+                    prevNode = curNode
+                    curNode = curNode.next
 
-                        curNode.next = new ListNode(val)
-                        curNode = curNode.next
-
-                        curNode.next = nexPrev
-                        break
-                    }
-                    else {
-                        curNode = curNode.next
-                        curVal = curNode.val
-                    }
                 }
                 else {
-
-                    // нету следующего. 
-
                     curNode.next = new ListNode(val)
                     break
                 }
+
             }
-            this.start = this.start.next
+            else {
+                // Ситуцаия
+                // cur<val<next
 
-
+                prevNode.next = new ListNode(val)
+                prevNode.next.next = curNode
+                break
+            }
+        }
+        if (this.k > 0) {
+            this.k--
 
         }
         else {
-            // значение меньше вроде ничего не делаем
+            this.start = this.start.next
         }
 
         return this.start.val
     }
 }
 
-// let kthLargest = new KthLargest(3, [1, 2, 3, 4]);
-// // kthLargest.add(3);   // return 3
-// console.log('kthLargest.add(3); ::: ', kthLargest.add(5));
-// console.log('kthLargest.add(3); ::: ', kthLargest.add(6));
-// console.log('kthLargest.add(3); ::: ', kthLargest.add(6));
-["KthLargest", [3, [4, 5, 8, 2]], "add", [3], "add", [5], "add", [10], "add", [9], "add", [4]]
+let abs=new MinPriorityQueue();
 
-let kthLargest = new KthLargest(3, [1000, -1000]);
-// kthLargest.add(3);   // return 3
-console.log('kthLargest.add(3); ::: ', kthLargest.add(0));
-console.log('kthLargest.add(3); ::: ', kthLargest.add(2));
-console.log('kthLargest.add(3); ::: ', kthLargest.add(-3));
+// TODO: проверить доабвление 5 6 и тд
+
+let sol = new KthLargest(1, []);
+// kthLargest.add(3)   // return 3
+console.log('kthLargest.add(3) ::: ', sol.add(3));
+// kthLargest.add(5)   // return 3
+console.log('kthLargest.add(5) ::: ', sol.add(5));
+
+// kthLargest.add(6)   // return 3
+console.log('kthLargest.add(6)  ::: ', sol.add(6));
+// kthLargest.add(7)   // return 5
+console.log('kthLargest.add(7)  ::: ', sol.add(7));
+// kthLargest.add(8)   // return 6
+console.log('kthLargest.add(8)  ::: ', sol.add(8));
