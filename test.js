@@ -1,4 +1,4 @@
-let i=2
+let a = Array(3).fill(0)
+console.log('a::: ', a);
 
-// Math.ceil(i / 2)
-console.log('Math.ceil(i / 2)::: ', Math.ceil(i / 2));
+дуе 
