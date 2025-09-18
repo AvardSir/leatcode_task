@@ -1,14 +1,18 @@
-// фильтрация как
+const { MaxPriorityQueue } = require('@datastructures-js/priority-queue');
 
-let ar = [3, 4, 23]
+// Инициализация с коллбэком, который достаёт поле priority
+let testH = new MaxPriorityQueue((item) => item.priority);
 
-let idTodel = 1
+// Теперь enqueue принимает ТОЛЬКО объект (без второго аргумента!)
+testH.push({ value: 4, priority: 22 });
+testH.push({ value: 3, priority: 3 });
+testH.push({ value: 's', priority: 5 });
 
-ar = ar.filter((v, i) => i != idTodel)
+console.log('=== ДИАГНОСТИКА ===');
 
+// console.log('Front():', testH.front());             // { value: 33, priority: 33 }
+// console.log('Front value:', testH.front().value);   // 33
+// console.log('Front priority:', testH.front().priority); // 33
 
-console.log('ar::: ', ar);
-let ar2=ar
-ar.pop()
-
-console.log('ar::: ', ar);
+console.log('Dequeue():', testH.pop());         // { value: 33, priority: 33 }
+// console.log('ToArray():', testH.toArray());         // оставшиеся элементы

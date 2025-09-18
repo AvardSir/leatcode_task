@@ -6,7 +6,7 @@ class user {
         this.userId = userID
         this.heap = new MaxPriorityQueue()
         // this.heap.toArray()
-        this.heap.size
+        // this.heap.size
 
         this.toFolowSet = new Set()
         // this.heap.enqueue()
@@ -15,8 +15,9 @@ class user {
     }
 }
 // class Twit {
-//     constructor(IdTwit, idAuthor) {
+//     constructor(IdTwit, timePost, idAuthor = null) {
 //         this.IdTwit = IdTwit
+//         this.timePost = timePost
 //         this.idAuthor = idAuthor
 
 //     }
@@ -25,6 +26,7 @@ class Twitter {
     constructor() {
         this.allUsers = new Map()
         // idUser->User
+        this.timePost = 0
 
 
     }
@@ -42,8 +44,12 @@ class Twitter {
         }
         curUser = mpUser.get(userId)
 
-        // добавить userу 
-        curUser.heap.push(tweetId);
+            // добавить userу 
+            // TODO: все heap.push переделать
+            // heap.push({ value: 4, priority: 22 });
+            ({ value: tweetId, priority: this.timePost })
+        curUser.heap.push(tweetId, this.timePost);
+
         // в масив this.arTwits = []
         curUser.arTwits.push(tweetId);
 
@@ -55,7 +61,8 @@ class Twitter {
                 // folowet
                 let curFolower = this.allUsers.get(folowerID)
                 // folowerID.heap.push(tweetId)
-                curFolower.heap.push(tweetId)
+                this.timePost
+                curFolower.heap.enqueue(tweetId, this.timePost)
                 // TODO:  Cannot read properties of undefined (reading 'push')
             }
 
@@ -64,7 +71,7 @@ class Twitter {
         let pa1 = 1
 
 
-
+        this.timePost++
     }
 
     /**
@@ -86,7 +93,7 @@ class Twitter {
 
         // let ar=[]
         // ar.length
-        curUser.heap.length
+        // curUser.heap.length
         let count = Math.min(10, curUser.heap.size())
         for (let i = 0; i < count; i++) {
             const element = curUser.heap.pop()
@@ -98,6 +105,7 @@ class Twitter {
         for (let i = count - 1; i >= 0; i--) {
             const element = saveArr[i];
             curUser.heap.push(element)
+
 
         }
         return saveArr
@@ -162,16 +170,16 @@ class Twitter {
         if (followeeId == followerId) {
             return
         }
-        if (!folower.toFolowSet.has(followeeId)) {
-            return
-        }
+
         let userMap = this.allUsers
 
         if (!userMap.has(followerId)) {
             userMap.set(followerId, new user(followerId))
         }
         let folower = userMap.get(followerId)
-
+        if (!folower.toFolowSet.has(followeeId)) {
+            return
+        }
 
         if (!userMap.has(followeeId)) {
             userMap.set(followeeId, new user(followeeId))
@@ -225,7 +233,7 @@ class Twitter {
 
         folower.heap = newHeap
 
-        folower.toFolowSet.del(followeeId)
+        folower.toFolowSet.delete(followeeId)
         let pa1 = 12
 
     }
