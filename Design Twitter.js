@@ -4,7 +4,7 @@ class user {
         this.arToFolow = []
         this.arFromFolow = []
         this.userId = userID
-        this.heap = new MaxPriorityQueue()
+        this.heap = new MaxPriorityQueue((item) => item.priority)
         // this.heap.toArray()
         // this.heap.size
 
@@ -44,14 +44,15 @@ class Twitter {
         }
         curUser = mpUser.get(userId)
 
-            // добавить userу 
-            // TODO: все heap.push переделать
-            // heap.push({ value: 4, priority: 22 });
-            ({ value: tweetId, priority: this.timePost })
-        curUser.heap.push(tweetId, this.timePost);
+        // добавить userу 
+        // TODO: все heap.push переделать
+        // heap.push({ value: 4, priority: 22 });
+        // ({ value: tweetId, priority: this.timePost })
+        curUser.heap.push({ value: tweetId, priority: this.timePost });
 
         // в масив this.arTwits = []
-        curUser.arTwits.push(tweetId);
+        // heap.push({ value: tweetId, priority: this.timePost });
+        curUser.arTwits.push({ value: tweetId, priority: this.timePost });
 
 
         // добавить ПОДПСИЧКАМ ЮЗЕРА
@@ -62,7 +63,8 @@ class Twitter {
                 let curFolower = this.allUsers.get(folowerID)
                 // folowerID.heap.push(tweetId)
                 this.timePost
-                curFolower.heap.enqueue(tweetId, this.timePost)
+                // heap.push({ value: tweetId, priority: this.timePost });
+                curFolower.heap.push({ value: tweetId, priority: this.timePost });
                 // TODO:  Cannot read properties of undefined (reading 'push')
             }
 
@@ -105,7 +107,13 @@ class Twitter {
         for (let i = count - 1; i >= 0; i--) {
             const element = saveArr[i];
             curUser.heap.push(element)
+        }
 
+        // curUser.heap.enqueue({ value: 33, priority: 33 })
+
+        for (let i = 0; i < saveArr.length; i++) {
+            const element = saveArr[i];
+            saveArr[i] = element['value']
 
         }
         return saveArr
@@ -153,9 +161,14 @@ class Twitter {
 
             // TODO: у фоловера heap сломан тк певрый элемент
             // UNDEF
-            folower.heap.push(twit)
-        }
+            // heap.push({ value: tweetId, priority: this.timePost });
+            let val = twit['value']
+            let prior = twit['priority']
 
+            folower.heap.push({ value: val, priority: prior })
+        }
+        // folower.heap.enqueue({ value: 33, priority: 33 })
+        // console.log('folower.heap::: ', folower.heap.nodes);
         folower.toFolowSet.add(followeeId)
         let pa2 = 1
 
@@ -214,8 +227,8 @@ class Twitter {
             // folower.heap.push(twit)
 
 
-            idToDel = twit
-            folowerHeap = folowerHeap.filter((v, i) => v != idToDel)
+            idToDel = twit['value']
+            folowerHeap = folowerHeap.filter((v, i) => v['value'] != idToDel)
 
 
 
@@ -225,7 +238,7 @@ class Twitter {
             // как? ну удалить все.
             // to array -> filtr ->toHeap ->heap = toHeap
         }
-        let newHeap = new MaxPriorityQueue()
+        let newHeap = new MaxPriorityQueue((item) => item.priority)
 
         for (const twit of folowerHeap) {
             newHeap.push(twit)
@@ -270,7 +283,6 @@ let twit = new Twitter()
 // twit.unfollow(1, 1);
 // twit.getNewsFeed(1);
 
-//TODO: тут ошибка гдет
 // twit.follow(1, 2);
 // twit.postTweet(2, 103);
 // twit.getNewsFeed(1);
@@ -278,15 +290,34 @@ let twit = new Twitter()
 // twit.postTweet(2, 104);
 // twit.getNewsFeed(1);
 
-twit.postTweet(2, 12);
-twit.postTweet(2, 13);
-twit.postTweet(3, 14);
-twit.postTweet(3, 15);
-twit.follow(2, 3);
-twit.follow(3, 2);
-twit.getNewsFeed(2);
-twit.getNewsFeed(3);
-twit.follow(2, 3);
-twit.getNewsFeed(2);
-twit.unfollow(3, 2);
-twit.getNewsFeed(3);
+// twit.postTweet(2, 12);
+// twit.postTweet(2, 13);
+// twit.postTweet(3, 14);
+// twit.postTweet(3, 15);
+// twit.follow(2, 3);
+// twit.follow(3, 2);
+// twit.getNewsFeed(2);
+// twit.getNewsFeed(3);
+// twit.follow(2, 3);
+// twit.getNewsFeed(2);
+// twit.unfollow(3, 2);
+// twit.getNewsFeed(3);
+
+
+twit.postTweet(1, 1);
+twit.postTweet(1, 2);
+twit.postTweet(1, 3);
+twit.postTweet(1, 4);
+twit.postTweet(1, 5);
+twit.postTweet(2, 6);
+twit.postTweet(2, 7);
+twit.follow(1, 2);
+twit.getNewsFeed(1);
+twit.unfollow(1, 2);
+twit.follow(1, 2);
+// twit.getNewsFeed(1);
+console.log('twit.getNewsFeed(1);::: ', twit.getNewsFeed(1));
+twit.postTweet(2, 8);
+twit.getNewsFeed(1);
+twit.unfollow(1, 2);
+twit.getNewsFeed(1);
