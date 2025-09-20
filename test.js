@@ -1,29 +1,9 @@
-const { MaxPriorityQueue } = require('@datastructures-js/priority-queue');
+const { PriorityQueue } = require('@datastructures-js/priority-queue');
 
-// Инициализация с коллбэком, который достаёт поле priority
-let testH = new MaxPriorityQueue((item) => item.priority);
+const pq = new PriorityQueue((a, b) => b[1]-a[1]  );
 
-// Теперь enqueue принимает ТОЛЬКО объект (без второго аргумента!)
-// heap.push({ value: 4, priority: 22 });
+pq.enqueue([5, -1]);
+pq.enqueue([2, 2]);
+pq.enqueue([3, "baz"]);
 
-testH.push({ value: 4, priority: 1 });
-testH.push({ value: 3, priority: 3 });
-testH.push({ value: 's', priority: 5 });
-
-console.log('=== ДИАГНОСТИКА ===');
-
-// console.log('Front():', testH.front());             // { value: 33, priority: 33 }
-// console.log('Front value:', testH.front().value);   // 33
-// console.log('Front priority:', testH.front().priority); // 33
-
-// console.log('Dequeue():', testH.pop());         // { value: 33, priority: 33 }
-
-
-testH.push({ value: '22s', priority: 6 });
-
-
-
-
-console.log('Dequeue():', testH.pop());         // { value: 33, priority: 33 }
-
-// console.log('ToArray():', testH.toArray());         // оставшиеся элементы
+console.log(pq.dequeue()); // [2, "bar"]
