@@ -3,6 +3,7 @@ class Solution {
      * @param {number[][]} intervals
      * @param {number[]} newInterval
      * @return {number[][]}
+     */
     insert(intervals, newInterval) {
         let starNew = newInterval[0]
         let endNew = newInterval[1]
