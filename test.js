@@ -1,4 +1,9 @@
-let ar=[1,2]
+let st = new Set()
 
-// ar.slice(2)
-console.log('ar.slice(2)::: ', ar.slice(5));
+st.add(0)
+st.add(3)
+
+let arr = [1, 2, 3, 4, 5]
+
+arr = arr.filter((v, i) => !st.has(i))
+console.log('arr::: ', arr);
