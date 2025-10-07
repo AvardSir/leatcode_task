@@ -6,17 +6,17 @@ str = str.replaceAll(')', ']')
 
 const { MinPriorityQueue } = require('@datastructures-js/priority-queue');
 
-let minH = new MinPriorityQueue((entry) => entry[0] )
+let minH = new MinPriorityQueue((entry) => entry[0])
 
+let minH2 = new MinPriorityQueue((v) => v[0])
 
+minH2.push([555, '2222'])
 
-minH.push([555, '2222'])
+minH2.push([232, '2222'])
 
-minH.push([22, '2222'])
-
-minH.push([444, '2222'])
+minH2.push([444, '2222'])
 
 // minH.front()
 // minH.size()
 // console.log('minH.size::: ', minH.size());
-2console.log('minH.front()::: ', minH.front());
+console.log('minH.front()::: ', minH2.front());
