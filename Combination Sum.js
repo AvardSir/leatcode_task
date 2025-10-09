@@ -1,27 +1,37 @@
 class Solution {
     /**
      * @param {number[]} nums
-     * @return {number[][]}
+     * @param {number} target
+     * @returns {number[][]}
      */
-    subsets(nums) {
+    combinationSum(nums, target) {
         let ans = []
+        function dfs(curTarger, path, j) {
 
+            // if (curTarger == 0) {
+            //     ans.push(path)
+            // }
+            // if (curTarger < =) {
 
+            // }
 
-        function dfs(curArr, i) {
-            if (curArr.length == nums.length) {
+            for (let i = j; i < nums.length; i++) {
+                const element = nums[i];
 
-            }
-            ans.push(curArr)
-            for (let j = i; j < nums.length; j++) {
-                const element = nums[j];
-
-                dfs([...curArr, element], j + 1)
+                let curNextTarget = curTarger - element
+                if (curNextTarget == 0) {
+                    ans.push([...path, element])
+                }
+                else if (curNextTarget < 0) {
+                    continue
+                }
+                dfs(curNextTarget, [...path, element], i)
 
             }
         }
 
-        dfs([], 0)
+        dfs(target, [], 0)
+
 
         return ans
     }
@@ -31,6 +41,9 @@ class Solution {
 const { MinPriorityQueue } = require("@datastructures-js/priority-queue");
 
 let sol = new Solution()
-nums = [1,2,3]
 
-console.log('::: ', sol.subsets(nums) );
+
+nums = [2, 5, 6, 9]
+target = 9
+
+console.log('::: ', sol.combinationSum(nums, target));
