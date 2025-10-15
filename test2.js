@@ -1,12 +1,10 @@
-let str = '123'
+let ar = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
-// str=str.slice(0,2)
-str = str.replace('1', 'aa')
+x = 0
+y = 2 - 0
+y = 2 - 1
 
-// str.has('aa')
-str.includes('aa')
-// console.log('str.has()::: ', str.has('aa'));
-console.log('str.includes(::: ', str.includes('afa'));
+y=2-2
 
-
-console.log('str::: ', str);
+// ar[y][x]
+console.log('ar[y][x]::: ', ar[y][x]);

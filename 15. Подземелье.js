@@ -1,177 +1,221 @@
-module.exports = (str) => {
-    let html = '';
-    //  Ваш код здесь
+function scan(map) {
+    // console.log('map::: ', map);
+    // ваш код
+    if (!map.length || !map[0].length) return { ceil: 0, floor: 0, both: 0 };
 
-    str = str.split('\n')
-    // str=str.trim()
-    for (let i = 0; i < str.length; i++) {
-        const element = str[i];
-        str[i] = str[i].trim()
+    let memo = []
+    // hash
+    for (let i = 0; i < map.length; i++) {
+        let element = map[i];
+
+        element = Array.from({ length: element.length }, v => 0)
+        // let cur
+
+        memo.push(element)
 
     }
 
-    let flagUl = false
-    for (let i = 0; i < str.length; i++) {
-        const element = str[i];
+    let check = 1
 
-        if (flagUl && element[0] != '*') {
-            flagUl = false
-            html += '</ul>'
+    let isBoth = false
+    // dfs функция проверка справа, снизу,слева, сверху 
+    function dfs(x, y) {
+        // ВСЕ проверки ДО отметки посещения!
+        if (x < 0 || x >= map[0].length || y < 0 || y >= map.length) return;
+        if (memo[y][x] == 1) return;
+        if (map[y][x] == 0) return;
+
+        // Только теперь отмечаем как посещенное
+        memo[y][x] = 1;
+
+        if (y == map.length - 1) {
+            isBoth = true;
         }
 
-        if (element == '') {
-            continue
-        }
+        // обход соседей
+        dfs(x + 1, y);
+        dfs(x - 1, y);
+        dfs(x, y + 1);
+        dfs(x, y - 1);
+    }
 
+    // верхний проход слева верха
+    let firstRow = map[0]
+    // подсчет ceil
+    let ceil = 0
+    let both = 0
+    let floor = 0
+    for (let j = 0; j < firstRow.length; j++) {
+        const element = firstRow[j];
 
-        if (element[0] == '=') {
-            // = head
+        let i = 0
 
-            // <h> </h>
-            html += '<h1>' + str[i].slice(2) + '</h1>'
+        let x = j
+        let y = 0
+        // console.log('memo[y][x]::: ', memo[y][x]);
 
-            let pas = 1
+        // TODO:dfs функцию
+        if (memo[y][x] != 1 && map[y][x] == 1) {
 
-        }
-        else if (element[0] == '*') {
-            if (!flagUl) {
-                flagUl = true
-                html += '<ul>'
+            // let isBoth = false
+            // TODO: тут работаю
+            dfs(x, y)
+            if (isBoth) {
+                both++
+                isBoth = false
             }
-
-            html += '<li>' + str[i].slice(2) + '</li>'
-
-            // < li ></li >
-
-
-        }
-        else {
-
-            html += '<p>'
-            // p
-            // сылки
-            let p = 0
-
-            while (p < str[i].length) {
-                let elP = str[i][p]
-                // console.log('str[i]::: ', str[i]);
-                if (elP == '(') {
-                    console.log('str[p + 1]::: ', str[p + 1]);
-
-                    let pa1 = 1
-                }
-                if (elP == '(' && str[i][p + 1] && str[i][p + 1] == '(') {
-
-                    let scobes = p + 2
-                    let starLink = scobes
-                    let endLink
-                    let endScobes
-                    while (true) {
-
-                        elScove = str[i][scobes]
-                        if (elScove == ' ') {
-                            // endLink
-                            endLink = scobes
-
-                        }
-                        if (str[i][scobes] == ')' && str[i][scobes + 1] && str[i][scobes + 1] == ')') {
-
-                            endScobes = scobes
-                            break
-                        }
-                        scobes++
-                    }
-
-                    let link = str[i].slice(starLink, endLink)
-
-                    let textLink = str[i].slice(endLink, endScobes)
-                    html += '<a href="' + link + '">' + textLink + '</a>'
-
-
-                    p = scobes + 1
-                }
-                else {
-                    html += elP
-                }
-
-                p++
+            else {
+                ceil++
             }
-
-            html += '</p>'
+            // условие Дотрунулся до пола ceil-- both++
         }
 
 
-
-
     }
-    if (flagUl) {
-        html += '</ul>'
+    // ceil
+    let slsl = 1
+
+
+    // нижний проход
+
+    let j = 0
+    while (j < firstRow.length) {
+        let x = j
+        let y = map.length - 1
+        j++
+
+        if (memo[y][x] != 1 && map[y][x] == 1) {
+
+            // TODO: тут работаю
+            // dfs(x, y)
+            // let z = j
+            // while (memo[y][x] != 1 && map[y][x] == 1) {
+
+            //     z++
+            // }
+
+            dfs(x, y)
+            floor++
+
+            // условие Дотрунулся до пола ceil-- both++
+            // ceil++
+        }
     }
-    return html;
-};
 
 
-// " <ul><li>test</li></ul>"
-// < ul > <li>test</li></ul >
-// * test
-data = `
-    
+    return { ceil: ceil, floor: floor, both: both }
+}
 
-= head
-                text ((https://ya.ru link)) text.
+module.exports = { scan };
 
-                * item
-                * item
-                `
+data = [
+    [1, 1, 0, 0, 0, 1, 0, 1, 1],
+    [1, 1, 0, 1, 0, 1, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 1, 1]
+]
+
+data = [
+    [1, 0, 1],
+    [1, 1, 1],
+    [0, 0, 1],
+]
+
+// data = [
+//     [1, 0, 1],
+//     [0, 1, 0],
+// ]
+
+// data=[
+//   [1, 0, 1],
+//   [0, 1, 1],
+//   [1, 1, 0],
+// ]
+console.log((scan(data)));
 
 
-data = `
-= head
+function runTest(input, expected, func) {
+    console.log('='.repeat(50));
+    console.log('📝 ТЕСТ:');
+    console.log('Входные данные:', JSON.stringify(input));
 
-text ((https://ya.ru link)) text.
+    try {
+        const result = func(input);
+        console.log('✅ Результат:', JSON.stringify(result));
+        console.log('✅ Ожидаемый:', JSON.stringify(expected));
 
-* item
-* item
-`
+        // Для объектов сравниваем через JSON.stringify
+        const isPassed = typeof result === 'object' && typeof expected === 'object'
+            ? JSON.stringify(result) === JSON.stringify(expected)
+            : result === expected;
 
+        if (isPassed) {
+            console.log('🎉 ТЕСТ ПРОЙДЕН!');
+        } else {
+            console.log('❌ ТЕСТ НЕ ПРОЙДЕН!');
+            console.log('Разница:');
+            console.log('Получено:', result);
+            console.log('Ожидалось:', expected);
+        }
 
-// data = `
-// * test
+        return isPassed;
 
-// `
-// let data = `
-// = head
-
-// text ((https://ya.ru link)) text.
-
-// * item
-// * item
-
-// `
-
-// data = `
-// * test
-
-// `
-
-// data = `
-// * item
-// * item
-
-// `
-
-console.log(module.exports(data));
-
-anser = `<h1>head</h1><p>text <a href="https://ya.ru">link</a> text.</p><ul><li>item</li><li>item</li></ul>`
-function isPas(data, anser, fun) {
-
-    if (fun(data) == anser) {
-        console.log('ok::: ', data);
-    }
-    else {
-        console.log('ok::: ', data);
+    } catch (error) {
+        console.log('💥 ОШИБКА ВЫПОЛНЕНИЯ:', error.message);
+        return false;
     }
 }
 
-// isPas(data, anser, module.exports()) 
 
+data = [
+    [1, 1, 0, 0, 0, 1, 0, 1, 1],
+    [1, 1, 0, 1, 0, 1, 0, 0, 0],
+    [0, 1, 0, 1, 0, 0, 0, 1, 1]
+]
+ans = { ceil: 2, floor: 2, both: 1 }
+runTest(data, ans, scan)
+
+data = [
+    [1, 0, 1],
+    [1, 1, 1],
+    [0, 0, 0],
+]
+// Результат: { ceil: 1, floor: 0, both: 0 }
+
+ans = { ceil: 1, floor: 0, both: 0 }
+runTest(data, ans, scan)
+
+
+data = [
+    [1, 0, 1],
+    [1, 1, 1],
+    [0, 0, 1],
+]
+ans = { ceil: 0, floor: 0, both: 1 }
+runTest(data, ans, scan)
+
+data = [
+    [1, 0, 1],
+    [0, 1, 0],
+]
+ans = { ceil: 2, floor: 1, both: 0 }
+runTest(data, ans, scan)
+
+
+
+data = [
+    [1, 0, 1],
+    [1, 1, 0],
+]
+ans = { ceil: 1, floor: 0, both: 1 }
+runTest(data, ans, scan)
+
+
+
+
+data = [
+    [0, 0, 0],
+    [0, 1, 0],
+    [1, 1, 1],
+]
+ans = { ceil: 0, floor: 0, both: 1 }
+runTest(data, ans, scan)
