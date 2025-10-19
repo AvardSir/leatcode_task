@@ -6,10 +6,7 @@
       "request": "launch",
       "name": "Запуск файла",
       "program": "${file}",
-      "console": "integratedTerminal", // Вывод в терминал, а не в Debug Console,
-      "internalConsoleOptions": "openOnSessionStart",
-      "showAsyncStacks": true,
-      "pauseForSourceMap": false
+      "console": "integratedTerminal" // Вывод в терминал, а не в Debug Console 
     }
   ]
 }

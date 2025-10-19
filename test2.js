@@ -1,2 +1,16 @@
-let srt = `{"data":{"lite-components":{"versions":[{"version":17,"dependencies":[{"packageName":"pretty-colors","version":198}]},\n{"version":16,"dependencies":[{"packageName":"pretty-colors","version":198}]},\n{"version":15,"dependencies":[{"packageName":"pretty-colors","version":197}]},\n{"version":14,"dependencies":[{"packageName":"pretty-colors","version":196}]},\n{"version":13,"dependencies":[{"packageName":"pretty-colors","version":196}]},\n{"version":12,"dependencies":[{"packageName":"pretty-colors","version":196}]}]},"lite-design":{"versions":[{"version":5,"dependencies":[{"packageName":"css-helper","version":41}]},\n{"version":4,"dependencies":[{"packageName":"css-helper","version":39}]},\n{"version":3,"dependencies":[{"packageName":"css-helper","version":39}]},\n{"version":2,"dependencies":[{"packageName":"css-helper","version":36}]},\n{"version":1,"dependencies":[{"packageName":"css-helper","version":33}]}]},"pretty-colors":{"versions":[{"version":198,"dependencies":[{"packageName":"css-helper","version":40}]},\n{"version":197,"dependencies":[{"packageName":"css-helper","version":38}]},\n{"version":196,"dependencies":[{"packageName":"css-helper","version":36}]},\n{"version":195,"dependencies":[{"packageName":"css-helper","version":36}]},\n{"version":194,"dependencies":[{"packageName":"css-helper","version":35}]}]},"css-helper":{"versions":[{"version":41},\n{"version":40},\n{"version":39},\n{"version":38},\n{"version":37},\n{"version":36},\n{"version":35},\n{"version":34},\n{"version":33}]}},"packageA":"lite-components","packageB":"lite-design"}`
-console.log('srt::: ', srt);
+let start = [1, 2]
+
+
+// start
+console.log('start::: ', start);
+
+let ar2 = [[1, 2], [3, 4]]
+console.log('ar2::: ', ar2);
+
+let ar23 = [44, 2]
+
+for (let i = 0; true; i++) {
+    // i = 0
+    const element = ar23[i];
+    // ar23.push(1)
+}
