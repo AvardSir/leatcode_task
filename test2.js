@@ -1,16 +1,4 @@
-let start = [1, 2]
-
-
-// start
-console.log('start::: ', start);
-
-let ar2 = [[1, 2], [3, 4]]
-console.log('ar2::: ', ar2);
-
-let ar23 = [44, 2]
-
-for (let i = 0; true; i++) {
-    // i = 0
-    const element = ar23[i];
-    // ar23.push(1)
-}
+let str = '1'
+str = str.repeat(3)
+console.log('str.repeat(3)::: ', str.repeat(3));
+console.log('str::: ', str);
