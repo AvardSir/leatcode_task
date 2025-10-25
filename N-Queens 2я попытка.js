@@ -234,7 +234,7 @@ class Solution {
 
 
             }
-
+            return emptyAr
             let check42 = 1
         }
 
@@ -246,25 +246,32 @@ class Solution {
         let ans = []
 
 
-        function dfs(i, j, totalQuen) {
+        function dfs(z, j, totalQuen) {
             if (totalQuen == 0) {
+                // let temp = quensToStr(quens)
                 ans.push(quensToStr(quens))
                 return
+            }
+
+            for (let j = 0; j < n; j++) {
+                // z=i j=j
+                // const element = array[z][j];
+                if (checkIJ(z, j)) {
+
+                    placeIJ(z, j, 1)
+                    quens.push([z, j])
+                    totalQuen--
+                    dfs(z + 1, j, totalQuen)
+                    totalQuen++
+                    placeIJ(z, j, 0)
+                    quens.pop()
+                }
             }
 
             for (let i = 0; i < n; i++) {
                 // const element = array[i];
                 let j = 0
-                if (checkIJ(i, j)) {
 
-                    placeIJ(i, j, 1)
-                    quens.push([i, j])
-                    totalQuen--
-                    dfs(i, j, totalQuen)
-                    totalQuen++
-                    placeIJ(i, j, 0)
-                    quens.pop()
-                }
 
             }
 
@@ -282,19 +289,20 @@ class Solution {
 
         let totalQuen = n
         let quens = []
-        for (let i = 0; i < board.length; i++) {
-            // const element = board[i];
-            for (let j = 0; j < board[i].length; j++) {
-                // const element = board[i][j];
+        // for (let i = 0; i < board.length; i++) {
+        //     // const element = board[i];
+        //     for (let j = 0; j < board[i].length; j++) {
+        //         // const element = board[i][j];
 
-                totalQuen = n
-                quens = []
-                dfs(i, j, totalQuen)
+        //         totalQuen = n
+        //         quens = []
+        //         dfs(i, j, totalQuen)
 
-            }
+        //     }
 
-        }
-        // TODO: пустой масчсив проверб работу алгоса
+        // }
+
+        dfs(0, 0, n)
         return ans
         // dfs(0, 0)
         let check = 1
