@@ -35,11 +35,11 @@ class Solution {
             if (grid[i][j] == 0) {
                 return 0
             }
-           
+
             if (grid[i][j] > 2147483647) {
                 return 2147483647
             }
-             if (grid[i][j] != 2147483647) {
+            if (grid[i][j] != 2147483647) {
                 return grid[i][j]
             }
 
