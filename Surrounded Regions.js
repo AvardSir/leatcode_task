@@ -107,10 +107,41 @@ class Solution {
 
             dfsAtlanta(i - 1, j, prevVal, z)
         }
-// TODO: вроде правильно все надо верх лево сделать. с z
-        z = 0 //?
+        // TODO: 
+        z = 1
         // верх
-        // лево
+        for (let j = 0; j < isOk[0].length; j++) {
+            let i = 0
+            let prevVal = heights[i][j]
+            dfsAtlanta(i + 1, j, prevVal, z)
+        }
+
+        // лево 
+        for (let i = 0; i < isOk.length; i++) {
+            let j = 0
+            let prevVal = heights[i][j]
+
+
+            dfsAtlanta(i, j + 1, prevVal, z)
+        }
+
+        let ans = []
+
+        for (let i = 0; i < isOk.length; i++) {
+            // const element = ;
+            for (let j = 0; j < isOk[0].length; j++) {
+                const element = isOk[i][j];
+
+                let l = element[0]
+                let r = element[1]
+
+                if (l == 1 && r == 1) {
+                    ans.push([i, j])
+                }
+
+            }
+        }
+        return ans
         let check = 1
     }
 }
