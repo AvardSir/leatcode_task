@@ -2,83 +2,84 @@ class Solution {
     /**
      * @param {number} numCourses
      * @param {number[][]} prerequisites
-     * @return {boolean}
+     * @return {number[]}
      */
-    canFinish(numCourses, prerequisites) {
-        let FromTo = new Map()
+    findOrder(numCourses, prerequisites) {
+        let ToFrom = new Map()
+
         for (let i = 0; i < prerequisites.length; i++) {
             const element = prerequisites[i];
             let l = element[0]
             let r = element[1]
 
-            let curAr
-            if (!FromTo.has(l)) {
-
-
-
-                FromTo.set(l, [])
+            if (!ToFrom.has(l)) {
+                ToFrom.set(l, [])
             }
-            curAr = FromTo.get(l)
+            let curAr = ToFrom.get(l)
             curAr.push(r)
-            // TODO: тут не доделана 
-            // TODOL: проблема на листке
-            // FromTo.set(l, r)
 
         }
 
+        let visitedSet = new Set()
+        let goodNodes = new Set()
+        let ans=[]
 
-        let check = 1
-        let isOk = true
+        let isPosible = true
+        function dfs(i) {
 
-        let goodISet = new Set()
-        function dfs(i, memoSet) {
-            if (goodISet.has(i)) {
+            if (goodNodes.has(i)) {
                 return
             }
-            if (!isOk) {
+            if (!isPosible) {
+                return
+            }
+            if (visitedSet.has(i)) {
+                isPosible = false
+                return
+            }
+            if (!ToFrom.has(i)) {
+                ans.push(i)
+                goodNodes.add(i)
                 return
             }
 
-            if (memoSet.has(i)) {
-                isOk = false
-                return
-            }
-
-            if (!FromTo.has(i)) {
-                goodISet.add(i)
-                return
-            }
-            memoSet.add(i)
-            let curArOfI = FromTo.get(i)
-            for (let j = 0; j < curArOfI.length; j++) {
-                const curI = curArOfI[j];
-
-                dfs(curI, memoSet)
-                if (!isOk) {
+            visitedSet.add(i)
+            let arFrom = ToFrom.get(i)
+            for (let i = 0; i < arFrom.length; i++) {
+                const element = arFrom[i];
+                dfs(element)
+                if (!isPosible) {
                     return
                 }
-
-                // element??
-
             }
-            goodISet.add(i)
-            memoSet.delete(i)
-
+            visitedSet.delete(i)
+            ans.push(i)
+            goodNodes.add(i)
+            // godeNode set 
         }
+
         for (let i = 0; i < numCourses; i++) {
-            // const element = array[i];
+            const element = i;
 
-            if (FromTo.has(i)) {
-                let memoSet = new Set()
-                dfs(i, memoSet)
-            }
-            if (!isOk) {
-                return isOk
+            if (!goodNodes.has(i)) {
+                visitedSet = new Set()
+                dfs(i)
+                if (!isPosible) {
+                    return []
+                }
+
             }
 
         }
+        if (!isPosible) {
+            return []
+        }
+        // TODO: проблема как сформировать ответ?
+        return ans //TODO?
 
-        return isOk
+
+
+        let chek = 1
     }
 }
 
@@ -93,5 +94,7 @@ class Node {
 let sol = new Solution()
 numCourses = 2, prerequisites = [[0, 1]]
 
+numCourses = 3, prerequisites = [[1,0]]
+numCourses = 3, prerequisites = [[0,1],[1,2],[2,0]]
 
-console.log(' ::: ', sol.canFinish(numCourses, prerequisites));
+console.log(' ::: ', sol.findOrder(numCourses, prerequisites));
