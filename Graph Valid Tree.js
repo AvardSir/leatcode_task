@@ -74,10 +74,10 @@ class Solution {
         if (!NoCycles) {
             return false
         }
-        if (counNodes!=fromTo.size) {
+        if (counNodes != fromTo.size) {
             return false
         }
-        else{
+        else {
             return true
         }
         let chek = 1
