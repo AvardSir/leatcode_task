@@ -32,9 +32,7 @@ class Solution {
         prices[src] = 0
         for (let i = 0; i <= k; i++) {
             let tempPrices = [...prices]
-            // const element = array[i];
             for (let j = 0; j < flights.length; j++) {
-                // const element = flights[j];
                 let [from_i, to_i, price_i] = flights[j]
                 if (tempPrices[from_i] == Infinity) {
                     continue
