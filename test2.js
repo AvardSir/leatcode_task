@@ -1,14 +1,13 @@
-let arr = ['a', 'b', 'c', 'd'];
+let str = 'abc'
 
-// Заменить 2 элемента начиная с индекса 1
-let removed = arr.splice(1, 2, 'x', 'y', 'z');
-// console.log(arr); // ['a', 'x', 'y', 'z', 'd']
-// console.log(removed); // ['b', 'c']
+function revrseStr(str) {
+    let newStr = ''
+    for (let i = 0; i < str.length; i++) {
+        const element = str[i];
+        newStr = element + newStr
 
-
-let tesar=[1,2,3]
-
-
-tesar.splice(1,1)
-
-console.log('tesar::: ', tesar);
+    }
+    return newStr
+}
+str=revrseStr(str)
+console.log('str::: ', str);
