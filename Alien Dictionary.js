@@ -152,7 +152,7 @@ class Solution {
 
             let setChilde = chars.get(curChar)
             let childere = setChilde[1]
-
+            // TODO: тут цикл гдето
             if (setChilde.length == 0 || childere.size == 0) {
                 return
             }
