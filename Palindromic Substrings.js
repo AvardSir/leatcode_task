@@ -10,6 +10,11 @@ class Solution {
             let l = 0
             let r = curStr.length - 1
 
+            if (curStr[l] != curStr[r]) {
+                return false
+            }
+            return true
+
             while (l < r) {
                 if (curStr[l] != curStr[r]) {
                     return false
