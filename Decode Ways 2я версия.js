@@ -40,7 +40,7 @@ class Solution {
         }
 
         let lr = l + r
-        if (ifCharCor(lr) ) {
+        if (ifCharCor(lr)) {
             dp[1]++
         }
 
@@ -96,5 +96,5 @@ s = "2101"
 
 s = "301"
 
-s="10"
+s = "10"
 console.log(' ::: ', sol.numDecodings(s));
