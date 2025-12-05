@@ -7,45 +7,29 @@ class Solution {
 
         let dp = [nums[0]]
         function binarySerch(el) {
-            if (el <= dp[0]) {
-                dp[0] = el
-                return
-            }
-            if (dp.length > 1 && dp[dp.length - 2] < el && el <= dp[dp.length - 1]) {
-                dp[dp.length - 1] = el
-                return
-            }
             let l = 0, r = dp.length - 1
             let mid = 0
 
             function findMid(r, l) {
-                return Math.ceil((r - l) / 2)
+                return Math.floor((r + l) / 2)
             }
 
-            while (l + 1 < r) {
-                mid = l + findMid(r, l)
+            while (l < r) {
+                mid = findMid(r, l)
                 let midEl = dp[mid]
 
-                if (el < midEl) {
-                    // l = mid
-                    r = mid
-                    // тут
-                    // dp[mid] = el
-                    // break
+                if (midEl < el) {
+                    l = mid + 1
                 }
 
                 else {
-                    l = mid
-                    // r = mid
+                    r = mid
                 }
 
 
 
             }
-            if (dp[l] == el || dp[r] == el) {
-                return
-            }
-            mid = l + findMid(r, l)
+            mid = findMid(r, l)
             dp[mid] = el
 
         }
@@ -101,11 +85,11 @@ nums = [9, 1, 4, 2, 3, 3, 7]
 // nums = [0, 3, 1, 3, 2, 3]
 
 
-nums = [4, 10, 4, 3, 8, 9]
+// nums = [4, 10, 4, 3, 8, 9]
 
-nums = [9, 1, 4, 2, 3, 3, 7]
-nums = [4, 10, 4, 3, 8, 9]
+// nums = [9, 1, 4, 2, 3, 3, 7]
+// nums = [4, 10, 4, 3, 8, 9]
 
-nums = [3, 5, 6, 2, 5, 4, 19, 5, 6, 7, 12]
+// nums = [3, 5, 6, 2, 5, 4, 19, 5, 6, 7, 12]
 
 console.log(' ::: ', sol.lengthOfLIS(nums));
