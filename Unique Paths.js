@@ -1,52 +1,41 @@
 class Solution {
     /**
-     * @param {number[]} nums
-     * @return {boolean}
+     * @param {number} m
+     * @param {number} n
+     * @return {number}
      */
-    canPartition(nums) {
-        let dp = Array.from({ length: nums.length }, v => [])
+    uniquePaths(m, n) {
+        let dp = Array.from({ length: m }, v => Array.from({ length: n }, v => 0))
+        for (let i = 0; i < m; i++) {
+            // const element = array[i];
+            let j = 0
+            dp[i][j] = 1
 
-        let alSum = 0
-        for (let i = 0; i < nums.length; i++) {
-            const element = nums[i];
-            alSum += element
+
         }
-        if (alSum % 2 != 0) {
-            return false
+        for (let j = 0; j < n; j++) {
+            // const element = array[j];
+            let i = 0
+            dp[i][j] = 1
         }
-        let target = alSum / 2
 
-        for (let i = 0; i < nums.length; i++) {
-            const el = nums[i];
-            if (el == target) {
-                return true
-            }
-            dp[i].push(el)
+        for (let i = 1; i < m; i++) {
+            // const element = array[i];
 
-            for (let j = 0; j < i; j++) {
-                // const element = nums[j];
+            for (let j = 1; j < n; j++) {
+                const el = dp[i][j];
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
 
-                for (let z = 0; z < dp[j].length; z++) {
-                    const elZ = dp[j][z];
-
-                    let newToAdToDp = elZ + el
-                    if (newToAdToDp == target) {
-                        return true
-                    }
-                    dp[i].push(newToAdToDp)
-
-                }
 
             }
 
         }
 
-        return false
-
+        return dp[m - 1][n - 1]
+        let chek = 1
+        // dp[i][j]?
     }
 }
-
-
 
 
 
@@ -57,4 +46,8 @@ let sol = new Solution()
 nums = [1, 2, 3, 4, 5]
 
 nums = [3, 3, 3, 4, 5]
-console.log(' ::: ', sol.canPartition(nums));
+
+m = 3, n = 6
+m = 3, n = 3
+
+console.log(' ::: ', sol.uniquePaths(m, n));
