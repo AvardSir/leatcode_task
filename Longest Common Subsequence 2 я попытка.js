@@ -18,6 +18,8 @@ class Solution {
         // bag revers
         // для a 
         let startBag = new Set()
+        // TODO сделать не set а map
+
         let curBag = startBag
 
         let wordToBagword = new Map()
@@ -76,4 +78,4 @@ text1 = "cat", text2 = "crabt"
 text1 = "abcba"
 text2 = "abcbcba"
 
-console.log(' ::: ', sol.longestCommonSubsequence(text1, text2));
+console.log 
