@@ -59,15 +59,20 @@ class Solution {
 
 
         let dp = Array.from({ length: b.length }, v => 0)
+
+        let neMAp = new Map()
+
         for (let i = 0; i < dp.length; i++) {
             // const element = dp[i];
             let curChar = b[i]
-            if (!charToMapR.has(curChar)) {
-                continue
-            }
+            neMAp = new Map()
+            // if (!charToMapR.has(curChar)) {
+            //     continue
+            // }
 
-            let curMap = new Map(charToMapR.get(curChar))
-            dp[i] = [1, curMap]
+            // let curMap = new Map(charToMapR.get(curChar))
+            neMAp.set(curChar, 1)
+            dp[i] = [1, neMAp]
 
         }
         // [len, map( key-char => countR)]
@@ -90,7 +95,7 @@ class Solution {
                     continue
                 }
                 let curNode = dp[j]
-                let curLen = curNode[0]
+                let lenJ = curNode[0]
                 let curMapR = curNode[1]
 
                 if (!curMapR.has(charBI)) {
@@ -103,7 +108,12 @@ class Solution {
                     continue
                 }
 
-                curRmapDP.set(charBI, val - 1)
+                if (lenJ + 1 > curLen) {
+                    curRmapDP.set(charBJ, val - 1)
+
+                }
+
+
                 // TODO
 
 
@@ -146,4 +156,4 @@ text1 = "dbcbv"
 text2 = "abcdbg"
 
 
-console.log('::: ', sol.longestCommonSubsequence(text1, text2));
+console.log('::: ', sol.longestCommonSubsequence(text1, text2)); 
