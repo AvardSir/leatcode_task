@@ -5,27 +5,41 @@ class Solution {
      */
     maxProfit(prices) {
 
-        let dp = Array.from({ length: prices.length }, v => 0)
+        let memo = new Map()
 
-        for (let i = 1; i < prices.length; i++) {
-            const elI = prices[i];
+        // true?
+        // false
+        function dfs(i, isBuy, indBuy) {
 
-            for (let j = 0; j < i; j++) {
-                const elJ = prices[j];
-
-                let adEl = 0
-                if (j > 1) {
-                    adEl = dp[j - 2]
-                }
-                let curVal = elI - elJ + adEl
-
-                dp[i] = Math.max(dp[i], curVal)
+            let key = `${i}-${isBuy}`
+            if (memo.has(key)) {
+                return memo.get(key)
             }
 
+
+            let coldaun = dfs(i + 1, isBuy, indBuy)
+
+            if (isBuy) {
+
+                let sell = dfs(i + 1, false, indBuy)
+
+                // сравнить 
+                // return сравнение
+            }
+            else {
+
+                // isSel=true
+                // посчтитаь прибыль 
+                let profit = prices[i] - prices[indBuy]
+
+                return profit + coldaun
+
+                // 
+            }
         }
 
 
-        return Math.max(...dp)
+        return dfs(0, isBuy, -1)
     }
 }
 
