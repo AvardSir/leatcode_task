@@ -22,6 +22,7 @@ class Solution {
             //     return memo.get(key)
             // }
 
+            // TODO botom top терь
             let s = 0
             for (let i = startI; i < coins.length; i++) {
                 const coin = coins[i];
