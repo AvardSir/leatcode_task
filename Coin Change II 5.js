@@ -33,8 +33,8 @@ class Solution {
 
 
                     let nextDpIndex = curSum - coin
-                    if (nextDpIndex==0) {
-                        let hcheke=1
+                    if (nextDpIndex == 0) {
+                        let hcheke = 1
                     }
                     if (nextDpIndex >= 0) {
                         dp[nextDpIndex][z] += dp[i][j]
