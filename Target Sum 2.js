@@ -33,9 +33,9 @@ class Solution {
             //     ans++
             //     continue
             // }
-            if (num > targetSum) {
-                continue
-            }
+            // if (num > targetSum) {
+            //     continue
+            // }
             dp[i].push(num)
             let chhek = 1
             for (let j = 0; j < i; j++) {
@@ -47,12 +47,12 @@ class Solution {
 
                     let curTestVal = curDpEl + num
 
-                    if (curTestVal > targetSum) {
+                    if (curTestVal > target) {
                         continue
                     }
-                    if (curTestVal == targetSum) {
+                    if (curTestVal == target) {
                         ans++
-                        continue
+                        
                     }
                     dp[i].push(curTestVal)
                 }
