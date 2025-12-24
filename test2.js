@@ -1,4 +1,3 @@
-let i = 32
-
-let s = `big bos ${i}`
-console.log('s::: ', s);
+let str='aabbbbaa_'
+let len=str.length
+console.log('len::: ', len);
