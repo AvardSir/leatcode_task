@@ -144,7 +144,7 @@ let sol = new Solution()
 
 // word1 = "monkeys", word2 = "money"
 
-word1 = "neatcdee", word2 = "neetcode"
+// word1 = "neatcdee", word2 = "neetcode"
 
 
 
