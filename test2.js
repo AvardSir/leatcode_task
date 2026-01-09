@@ -1,50 +1,23 @@
-let word1 = "neatcdee", word2 = "neetcode"
-let ar = []
-ar.length
-function compra(str1, str2) {
-    if (str1.length != str2.length) {
-        if (str1.length > str2.length) {
-
-        }
-        else {
-            [str1, str2] = [str2, str1]
-        }
-
-        // str1>str2
-        let deltaLen = str1.length - str2.length
-        for (let i = 0; i < deltaLen; i++) {
-            // const element = array[i];
-            str2 += '_'
-
-        }
-    }
-    let count = 0
-    for (let i = 0; i < str1.length; i++) {
-        const charStr1 = str1[i];
-        const charStr2 = str2[i];
-        if (charStr1 != charStr2) {
-            count++
-        }
-
-    }
-    return count
-
+function creaIArr(arr, i) {
+    return [...arr.slice(0, i), ...arr.slice(i + 1)]
 }
 
-let str1 = 'abc'
-let str2 = 'cb'
+let arr = [1, 2, 3, 4]
+let test = arr.join('')
+let htht=1
+let i = 2
 
-// compra(str1, str2)
-// console.log('compra(str1, str2)::: ', compra(str1, str2));
-word1 = "monkeys", word2 = "money"
+let newAr = creaIArr(arr, 0)
+newAr.push(33)
 
+let htht2 = 1
 
-// compra(word1, word2)
-console.log('compra(word1, word2)::: ', compra(word1, word2));
+// let nextArr = (arr.slice(0, i) + arr.slice(i + 1))
+let nextArr = [...arr.slice(0, i), ...arr.slice(i + 1)]
 
+// for (let i = 0; i < nextArr.length; i++) {
+//     const element = nextArr[i];
+//     nextArr[i] = Number(element)
 
-// word1.length
-// console.log('word1.length::: ', word1.length);
-
-// word2.length
-// console.log('word2.length::: ', word2.length);
+// }
+console.log('nextArr::: ', nextArr);
