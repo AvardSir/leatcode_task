@@ -1,14 +1,69 @@
-const fs = require('fs');
-// Читаем весь ввод как строку, обрезаем лишние пробелы/переносы
-// const data = fs.readFileSync(0, 'utf8');
-let data = `2 2`
-// console.log('data::: ', data);
-// Далее парсим data в зависимости от задачи
+let testOB = { a: 2 }
 
-data = data.split(' ')
-let a = Number(data[0])
-let b = Number(data[1])
-// data = data[0] + 
-console.log(a + b);
+let testObj = { a: 2, b: 3, c: 4 }
+let someFunc1 = function dpdpdp(l) {
 
-return 
+}, someFunc2, someFunc3, someFunc4, someFunc5, someFunc6, someFunc7, someFunc8, someFunc9
+const MODEL = {
+    page: {
+        content: {
+            form: {
+                submit: someFunc1,
+            },
+            infoBlock: {
+                more: {
+                    click: someFunc2,
+                },
+            },
+        },
+        footer: {
+            blog: {
+                about: {
+                    expand: someFunc3,
+                },
+                articles: {
+                    click: someFunc4,
+                },
+            },
+            show: someFunc5,
+        },
+        header: {
+            logo: someFunc6,
+            user: {
+                login: someFunc7,
+                logout: someFunc8,
+            },
+        },
+        show: someFunc9,
+    },
+};
+
+function isObject(value) {
+    return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+let ans = {}
+
+function dfs(Obj, strBefore) {
+    for (const curKey in Obj) {
+
+
+        const el = Obj[curKey];
+        if (!isObject(el)) {
+            // end
+            ans[strBefore] = el
+            // TODO
+        };
+
+        // TODO
+        dfs(el, strBefore + '.' + curKey)
+        // console.log('key::: ', curKey);
+        // console.log('el::: ', el);
+
+
+    }
+}
+dfs(MODEL, '')
+// console.log('dfs(MODEL,::: ', dfs(MODEL, ''));
+// ans
+console.log('ans::: ', ans);
+let hhtht = 1

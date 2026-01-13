@@ -1,14 +1,17 @@
-const fs = require('fs');
-// Читаем весь ввод как строку, обрезаем лишние пробелы/переносы
-// const data = fs.readFileSync(0, 'utf8');
-let data = fs.readFileSync(0, 'utf8');
-// console.log('data::: ', data);
-// Далее парсим data в зависимости от задачи
+let prom = new Promise((resolve, reject) => {
 
-data = data.split(' ')
-let a = Number(data[0])
-let b = Number(data[1])
-// data = data[0] + 
-console.log(a + b);
+    if (Math.random() > 0.5) {
+        resolve([1, 2, 3])
+    }
+    else {
+        reject([3, 2, 1])
+    }
+}).then((data) => {
+    console.log('data::: ', data);
+    // x
+    console.log('x::: ', x);
 
-return 
+})
+    .catch((data) => {
+        console.log('data::: ', data);
+    })
