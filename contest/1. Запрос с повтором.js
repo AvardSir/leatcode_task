@@ -1,98 +1,77 @@
-function Employee(name, position, salary) {
-    this.name = name
-    this.position = position
-    this.salary = salary
-}
+/**
+ * Функция, которая запрашивает данные с помощью fetcher
+ * и повторяет запрос в случае ошибки. Запросы повторяются
+ * до тех пор, пока не будет получен успешный ответ
+ * или пока не будут исчерпаны все попытки.
+ * 
+ * @param {function} fetcher - функция, которая возвращает Promise
+ * @param {number} count - максимальное количество попыток
+ */
+async function fetchWithAutoRetry(fetcher, count) {
 
-Employee.prototype.getInfo = function getInfo() {
-    return `"Имя: ${this.name}, Должность: ${this.position}, Зарплата: ${this.salary}"`
-}
+    let eror
+    while (count >= 0) {
+        try {
+            let data = await fetcher()
+            return data
+        } catch (error) {
 
-Employee.prototype.work = function work() {
-    return `"${this.name} работает..."`
-}
+            count--
 
-let empl1 = new Employee('Jack', 'cleaner', 100)
+            eror = error
+        }
 
-// empl1.getInfo()
-// console.log('empl1.getInfo()::: ', empl1.getInfo());
+    }
+    throw eror
 
+};
 
+/**
+ * Создаёт мок функции fetcher,
+ * который по порядку возвращает
+ * ответы из массива responses
+ */
+const createFetcherMock = (responses) => {
+    let counter = 0;
+    let isLoading = false;
 
-function Developer(name, position, salary, programmingLanguage) {
-    Employee.call(this, name, position, salary)
-    this.programmingLanguage = programmingLanguage
-}
+    return async () => {
+        if (isLoading) {
+            throw new Error('429 Too Many Requests');
+        }
 
-Developer.prototype = Object.create(Employee.prototype)
+        const response = responses[counter % responses.length];
+        isLoading = true;
 
-Developer.prototype.constructor = Developer
+        await new Promise((resolve) => setTimeout(resolve, 10 * Math.random()));
 
-Developer.prototype.work = function work() {
-    return `${this.name} пишет код на ${this.programmingLanguage}`
-}
+        isLoading = false;
+        counter++;
 
-let dev1 = new Developer('Max', 'Dev', 200, 'Java')
+        return response.error
+            ? Promise.reject(response.error)
+            : Promise.resolve(response.data);
+    };
+};
 
-console.log('dev1.work()::: ', dev1.work());
-console.log('empl1.work()::: ', empl1.work());
+let fetcher = createFetcherMock([
+    { 'error': '504 Gateway Timeout' },
+    { 'error': '503 Service Unavailable' },
+    { 'error': '502 Bad Gateway' },
+    { 'error': '500 Internal Server Error' },
+    { 'data': 'Hello, world!' },
+    { 'data': 'Yandex' }
+]);
 
-function Manager(name, position, salary, teamSize) {
-    Employee.call(this, name, position, salary)
-    this.teamSize = teamSize
-}
-Manager.prototype = Object.create(Employee.prototype)
+fetcher = createFetcherMock([
+    { 'error': '504 Gateway Timeout' },
+    { 'error': '503 Service Unavailable' },
+    { 'error': '502 Bad Gateway' },
+    { 'error': '500 Internal Server Error' },
+    { 'data': 'Hello, world!' },
+    { 'data': 'Yandex' }
+]);
 
-Manager.prototype.constructor = Manager
-
-// Manager.prototype
-
-
-// conductMeeting(): "[name] проводит совещание"
-Manager.prototype.conductMeeting = function conductMeeting(params) {
-
-    return `${this.name} проводит совещание`
-}
-
-Manager.prototype.work = function work() {
-    return `${this.name} управляет командой из ${this.teamSize} человек`
-}
-
-let man1 = new Manager('Sem', 'manger', 98, 30)
-man1.work()
-console.log('man1.work()::: ', man1.work());
-
-
-
-
-
-function TeamLead(name, position, salary, teamSize) {
-    // Employee.call(this, name, position, salary)
-    Manager.call(this, name, position, salary, teamSize)
-    this.teamSize = teamSize
-}
-
-Object.assign(TeamLead, Employee)
-Object.assign(TeamLead, Manager)
-TeamLead.prototype = Object.create(Manager.prototype)
-
-TeamLead.prototype.constructor = TeamLead
-
-
-
-TeamLead.prototype.work = function work() {
-    // Employee.call(this, work())
-    // Manager.call(this, work())
-
-    let res = ''
-    res += Employee.prototype.work.call(this)
-    res += Manager.prototype.work.call(this)
-    res += `и управляет командой размером ${this.teamSize} человек`
-
-
-    return res
-}
-
-let tLed1 = new TeamLead('Tom', 'TeemLed', 300, 10)
-// tLed1.work()
-console.log('tLed1.work()::: ', tLed1.work());
+fetchWithAutoRetry(fetcher, 3)
+    .then((data) => console.log('Success:', data))
+    .catch((error) => console.error('Error:', error));
