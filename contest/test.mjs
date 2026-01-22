@@ -1,20 +1,20 @@
-// isNaN('s')
-// console.log('isNaN()::: ', isNaN('s'));
+async function test(prom) {
+    let total = await Promise.all(prom)
 
-let testStr = 'v'
-
-// console.log('isNaN(1)::: ', Number(testStr));
-let testVal = Number(testStr)
-
-
-let testStr2 = 'b'
-let NumTest2 = Number(testStr2)
-'0'.charCodeAt()
-console.log('charCodeAt()::: ', '0'.charCodeAt());
-// console.log('''.charCodeAt()::: ', ''.charCodeAt());
-if (isNaN(NumTest2)) {
-    console.log('NAN::: ', NaN);
+    let tktk = 1
 }
-else {
-    console.log('NOT NAN::: ', 2);
-}
+
+let prom1 = new Promise(resolve => resolve([1, 2, 3]))
+let prom2 = new Promise(resolve => resolve([4, 5, 3]))
+let prom3 = new Promise(resolve => resolve([7, 8, 3]))
+
+let testId = 456
+
+
+let testAr = [
+    [1, prom1],
+    [2, prom2],
+    [3, prom3]
+]
+
+test(testAr)
