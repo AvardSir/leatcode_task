@@ -18,7 +18,7 @@ const splitWordsBySeparator = (words, separator) => {
             }
             // todo почему  startI + sepIndex прошел 
             // а // startI++ нет
-            if (charSep != word[startIndex ]) {
+            if (charSep != word[startIndex]) {
                 return false
             }
             startIndex++
