@@ -1,46 +1,82 @@
 function doTask(data) {
-    if (!data || data.trim() === '') return 0;
+    const n = Number(data[0]);
+    const a = data[1].split(' ').filter(v => v !== '').map(Number);
 
-    const [lStr, rStr] = data.trim().split(/\s+/);
-    const l = parseInt(lStr, 10);
-    const r = parseInt(rStr, 10);
-    
-    if (isNaN(l) || isNaN(r) || l > r) return 0;
-
-    // Функция для проверки одного числа
-    function isSameDigitNumber(num) {
-        if (num === 0) return true; // 0 состоит из одинаковых цифр
-        
-        const str = num.toString();
-        const firstDigit = str[0];
-        
-        for (let i = 1; i < str.length; i++) {
-            if (str[i] !== firstDigit) return false;
-        }
-        return true;
+    // Проверка корректности ввода
+    if (n === 0 || a.length !== n) {
+        return "-1 -1";
     }
 
-    let count = 0;
-    
-    // Перебираем все числа в диапазоне (оптимизировано)
-    for (let digit = 0; digit <= 9; digit++) {
-        let num = digit;
-        
-        while (num <= r) {
-            if (num >= l && isSameDigitNumber(num)) {
-                count++;
+    // Функция проверки, образует ли граф один цикл
+    function isCycle(arr) {
+        const visited = new Array(n + 1).fill(false); // +1 для удобства (индексы 1..n)
+        let current = 1;
+        let count = 0;
+
+        while (!visited[current]) {
+            visited[current] = true;
+            current = arr[current - 1]; // -1 т.к. arr индексируется с 0
+            count++;
+        }
+
+        return current === 1 && count === n;
+    }
+
+    // Если уже один цикл
+    if (isCycle(a)) {
+        return "-1 -1";
+    }
+
+    // Массив для подсчета входящих ребер (индексы 1..n)
+    const incoming = new Array(n + 1).fill(0);
+
+    // Подсчет входящих ребер
+    for (let i = 0; i < n; i++) {
+        incoming[a[i]]++;
+    }
+
+    // Ищем учеников с 0 и 2 вхождениями
+    const doubleIncomingIndexes = [];
+    const zeroIncomingPupils = [];
+
+    for (let pupil = 1; pupil <= n; pupil++) {
+        const inCount = incoming[pupil];
+
+        if (inCount === 2) {
+            // Находим индексы (0-based) учеников, которые дарят подарок этому pupil
+            const firstIndex = a.indexOf(pupil);
+            const lastIndex = a.lastIndexOf(pupil);
+            if (firstIndex !== -1) doubleIncomingIndexes.push(firstIndex);
+            if (lastIndex !== -1 && lastIndex !== firstIndex) doubleIncomingIndexes.push(lastIndex);
+            // debugger
+        }
+
+        if (inCount === 0) {
+            zeroIncomingPupils.push(pupil);
+        }
+
+        // Если вхождений больше 2, невозможно исправить одной заменой
+        if (inCount > 2) {
+            return "-1 -1";
+        }
+    }
+
+    // Если есть один ученик с двумя входящими и один ученик без входящих
+    if (doubleIncomingIndexes.length === 2 && zeroIncomingPupils.length === 1) {
+        const zeroPupil = zeroIncomingPupils[0];
+
+        // Пробуем заменить каждого из двух учеников, которые дарят одному и тому же
+        for (const index of doubleIncomingIndexes) {
+            const aCopy = [...a];
+            aCopy[index] = zeroPupil;
+
+            if (isCycle(aCopy)) {
+                return `${index + 1} ${zeroPupil}`;
             }
-            
-            if (digit === 0) break; // Для 0 только один раз
-            
-            num = num * 10 + digit;
-            
-            // Защита от переполнения
-            if (num > Number.MAX_SAFE_INTEGER / 10) break;
         }
     }
-    
-    return count;
+
+    return "-1 -1";
 }
 
 
@@ -50,23 +86,21 @@ var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
+
 let data = [];
 let count = 0;
+
 rl.on('line', (line) => {
     data.push(line.trim());
     count++;
 
-    if (count === 1) {
-        let res = doTask(data[0]);
+    if (count === 2) {
+        let res = doTask(data);
         console.log(res);
         rl.close();
     }
 });
 
 rl.on('close', () => {
-
     process.exit(0);
 });
-
-
-
