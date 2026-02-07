@@ -20,6 +20,8 @@ function doTask(data) {
         return badAns
     }
 
+
+    // заполнить toFrom fromTo
     for (let i = 0; i < githtsTos.length; i++) {
         const giftTo = githtsTos[i];
 
@@ -44,6 +46,26 @@ function doTask(data) {
             toFrom.set(to, curToAr)
             // debugger
         }
+    }
+
+
+    // проверка на корреккнтый цикл
+    function checkCycle(start) {
+        let visited = new Set()
+        let len = githtsTos.length
+
+        let curNode = start
+
+        while (!visited.has(curNode)) {
+            visited.add(curNode)
+            curNode = fromTo.get(curNode)
+        }
+
+        return visited.size == len && start == curNode
+
+    }
+    if (checkCycle(0)) {
+        return badAns
     }
 
     let serchFrom
@@ -103,51 +125,86 @@ function doTask(data) {
         }
 
         for (const testFron of arFrom) {
-
-
             if (testCycle(testFron)) {
                 return testFron
             }
         }
-
-        debugger
+        return badAns
+        // debugger
     }
 
-    serchFrom = findFrom(serchFrom)
+
 
     if (serchFrom == undefined || serchTo == undefined) {
         return badAns
     }
+    serchFrom = findFrom(serchFrom)
 
     return [serchFrom + 1, serchTo + 1].join(' ')
 }
 
 
 
+// console.log('::: ', doTask(testStr1.split('\n')));
 
 
+let badAns = '-1 -1'
+
+let testStr1 = `3
+1  3  1`
 
 
-var readline = require('readline');
-var rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-let data = [];
-let count = 0;
-
-rl.on('line', (line) => {
-    data.push(line.trim());
-    count++;
-
-    if (count === 2) {
-        let res = doTask(data);
-        console.log(res);
-        rl.close();
+class simpleTest {
+    constructor() {
+        this.counter = 1
     }
-});
+    test(func, data, rightAns) {
+        let ans = func(data)
+        if (ans === rightAns) {
+            console.log(`Test ${this.counter++} OK::: `);
+        }
+        else {
+            console.log(`Test ${this.counter++} WRONG::: `, '\n', data, '\n right ans\n ', rightAns, '\n this ans\n', ans, '\n\n');
+        }
+    }
+}
 
-rl.on('close', () => {
-    process.exit(0);
-});
+let testObj = new simpleTest()
+
+function makeStrToData(str) {
+    return str.split('\n')
+}
+let righANS
+
+
+// //
+// testStr1 = `1
+// 1 3 1`
+// righANS = '1 2'
+// testStr1 = makeStrToData(testStr1)
+
+// testObj.test(doTask, testStr1, righANS)
+// //
+
+
+// //
+// testStr1 = `1
+// 1 2 3`
+// righANS = badAns
+// testStr1 = makeStrToData(testStr1)
+
+// testObj.test(doTask, testStr1, righANS)
+// //
+
+
+
+//
+testStr1 = `1
+2 1`
+righANS = badAns
+
+testStr1 = makeStrToData(testStr1)
+testObj.test(doTask, testStr1, righANS)
+//
+
+

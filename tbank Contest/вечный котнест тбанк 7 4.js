@@ -1,14 +1,15 @@
 function doTask(data) {
     const n = Number(data[0]);
 
+    // превращаем дату в n,students
     data = data[1]
     data = data.split(' ')
     data = data.filter(v => v != '')
     data = data.map(Number)
-
     let githtsTos = data
     githtsTos = githtsTos.map((v) => v - 1)
 
+    // иницилазация 
     let toFrom = new Map()
     let fromTo = new Map()
 
@@ -18,9 +19,9 @@ function doTask(data) {
     let potentialFromsIndexes = []
 
     // ищем potentialFromsIndexes который нужно изменить
+    let serchingFrom
     for (let i = 0; i < githtsTos.length; i++) {
         const giftTo = githtsTos[i];
-
         let from = i
         let to = giftTo
         fromTo.set(from, to)
@@ -28,43 +29,48 @@ function doTask(data) {
         if (!toFrom.has(to) && to != from) {
             toFrom.set(to, from)
         }
-
         else {
             if (isOneInnerCycle == true) {
+                // есть два цикла 
                 return badAns
             }
 
             isOneInnerCycle = true
             let prevTOval
             if (to == from) {
-                prevTOval = to
-                potentialFromsIndexes.push(prevTOval)
-                break
+                serchingFrom = to
             }
             else {
                 prevTOval = toFrom.get(to)
                 potentialFromsIndexes.push(prevTOval)
                 potentialFromsIndexes.push(from)
-                debugger
             }
         }
 
     }
-    for (let i = 0; i < potentialFromsIndexes.length; i++) {
-        const potentialFrom = potentialFromsIndexes[i];
-        let curNode = potentialFrom
+
+    function checkCycle(start) {
         let visited = new Set()
 
-        let prevNode
-
-        while (visited.has(curNode)) {
+        let curNode = start
+        while (!visited.has(curNode)) {
             visited.add(curNode)
-            prevNode = curNode
             curNode = fromTo.get(curNode)
         }
-
-
+        return start == curNode
     }
+
+    if (serchingFrom == undefined) {
+        for (let i = 0; i < potentialFromsIndexes.length; i++) {
+            const potentialFrom = potentialFromsIndexes[i];
+
+            if (checkCycle(potentialFrom)) {
+                serchingFrom = potentialFrom
+                break
+            }
+        }
+    }
+
 
     // todo сделать проверку полного цикла
 
@@ -81,13 +87,9 @@ function doTask(data) {
                 break
             }
         }
-        if (visited.size == githtsTos.length && curNode == start) {
-            return true
 
-        }
-        else {
-            return false
-        }
+        return visited.size == githtsTos.length && curNode == start
+
     }
 
     if (checkCycle(0)) {
@@ -109,6 +111,8 @@ function doTask(data) {
 
 
     // todo перепиши эту частьниже
+
+
     let curNode = cycleIndex
     let visited = new Set()
     visited.add(curNode)
@@ -138,9 +142,15 @@ function doTask(data) {
         }
 
     }
-    return [targetFrom + 1, target + 1].join(' ')
+    if (serchingFrom == target) {
+        return badAns
+    }
+    return [serchingFrom + 1, target + 1].join(' ')
 
 }
+
+
+
 
 let testStr1 = `3
 1  2  3`
@@ -149,16 +159,20 @@ let testStr1 = `3
 
 
 testStr1 = `3
-1  3  1`
+3`
 
 
 
 testStr1 = `3
-3 3 1    `
+1 1 3`
 
 
-testStr1 = `3
-1 1 2`
+// testStr1 = `3
+// 1 1 2    `
+
+
+// testStr1 = `3
+// 1 1 2`
 
 // testStr1 = `3
 // 2 3 1`

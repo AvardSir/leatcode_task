@@ -3,9 +3,9 @@ function doTask(data) {
     const a = data[1].split(' ').filter(v => v !== '').map(Number);
 
     // Проверка корректности ввода
-    if (n === 0 || a.length !== n) {
-        return "-1 -1";
-    }
+    // if (n === 0 || a.length !== n) {
+    //     return "-1 -1";
+    // }
 
     // Функция проверки, образует ли граф один цикл
     function isCycle(arr) {

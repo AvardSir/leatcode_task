@@ -1,4 +1,4 @@
-let ar = [1, 2, 3]
-
-// ar.indexOf(2)
-console.log('ar.indexOf(2)::: ', ar.lastIndexOf(3));
+let testSet=new Set()
+testSet.add(1)
+// testSet.size
+console.log('testSet.size::: ', testSet.size);

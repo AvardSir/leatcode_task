@@ -18,9 +18,10 @@ function doTask(data) {
     let potentialFromsIndexes = []
 
     // ищем potentialFromsIndexes который нужно изменить
+    let serchingFrom
     for (let i = 0; i < githtsTos.length; i++) {
-        const giftTo = githtsTos[i];
 
+        const giftTo = githtsTos[i];
         let from = i
         let to = giftTo
         fromTo.set(from, to)
@@ -37,33 +38,46 @@ function doTask(data) {
             isOneInnerCycle = true
             let prevTOval
             if (to == from) {
-                prevTOval = to
-                potentialFromsIndexes.push(prevTOval)
+                serchingFrom = to
+                // potentialFromsIndexes.push(prevTOval)
                 break
             }
             else {
                 prevTOval = toFrom.get(to)
                 potentialFromsIndexes.push(prevTOval)
                 potentialFromsIndexes.push(from)
-                debugger
+                // debugger
             }
         }
 
     }
-    for (let i = 0; i < potentialFromsIndexes.length; i++) {
-        const potentialFrom = potentialFromsIndexes[i];
-        let curNode = potentialFrom
+
+
+    function checnCycle(start) {
         let visited = new Set()
 
-        let prevNode
-
-        while (visited.has(curNode)) {
+        let curNode = start
+        while (!visited.has(curNode)) {
             visited.add(curNode)
-            prevNode = curNode
             curNode = fromTo.get(curNode)
         }
+        return start == curNode
+    }
+
+    if (serchingFrom == undefined) {
+        for (let i = 0; i < potentialFromsIndexes.length; i++) {
+            const potentialFrom = potentialFromsIndexes[i];
+
+            if (checnCycle(potentialFrom)) {
+                serchingFrom = potentialFrom
+                break
+            }
+        }
+    }
 
 
+    if (serchingFrom == undefined) {
+        debugger
     }
 
     // todo сделать проверку полного цикла
@@ -83,7 +97,6 @@ function doTask(data) {
         }
         if (visited.size == githtsTos.length && curNode == start) {
             return true
-
         }
         else {
             return false
@@ -109,6 +122,8 @@ function doTask(data) {
 
 
     // todo перепиши эту частьниже
+
+
     let curNode = cycleIndex
     let visited = new Set()
     visited.add(curNode)
@@ -154,11 +169,11 @@ testStr1 = `3
 
 
 testStr1 = `3
-3 3 1    `
+1 1 2    `
 
 
-testStr1 = `3
-1 1 2`
+// testStr1 = `3
+// 1 1 2`
 
 // testStr1 = `3
 // 2 3 1`
