@@ -62,31 +62,18 @@ function doTask(data) {
     // console.log(); // 2.500000 2.083333
     return [resultX.toFixed(6), resultY.toFixed(6)].join(' ')
 }
+// todo прочесть обьяснение
 
 
+let testStr1
+
+testStr1 = `10  5
+3.0  2.5  1.0  2.5  1.0  1.5  3.0  1.5`
+// console.log('::: ', doTask(testStr1.split('\n')));
+let firstPartData = '10  5'
+let secondPartData = '3.0  2.5  1.0  2.5  1.0  1.5  3.0  1.5'
+let dataTest1 = [firstPartData, secondPartData]
+
+console.log('::: ', doTask(dataTest1));
 
 
-
-var readline = require('readline');
-var rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-let data = [];
-let count = 0;
-
-rl.on('line', (line) => {
-    data.push(line.trim());
-    count++;
-
-    if (count === 2) {
-        let res = doTask(data);
-        console.log(res);
-        rl.close();
-    }
-});
-
-rl.on('close', () => {
-    process.exit(0);
-});

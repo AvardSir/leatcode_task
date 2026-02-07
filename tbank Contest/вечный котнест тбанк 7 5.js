@@ -64,6 +64,7 @@ function doTask(data) {
         return visited.size == len && start == curNode
 
     }
+      
     if (checkCycle(0)) {
         return badAns
     }
