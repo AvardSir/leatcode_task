@@ -69,31 +69,46 @@ function doTask(data) {
     return ansMin
 }
 
+// todo прочесть заново код
+
+let testStr1
+
+testStr1 = `5
+35
+40
+101
+59
+63`
 
 
-// todo разбери решение задания 
+// testStr1 = `2
+// 100
+// 98
+// 99
+// `
 
-var readline = require('readline');
-var rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
 
-let data = [];
-let count = 0;
+// testStr1 = `2`
 
-rl.on('line', (line) => {
-    data.push(line.trim());
-    let n = Number(data[0])
-    count++;
+// testStr1 = `4
+// 2
+// 100
+// 0
+// 0`
 
-    if (count > n) {
-        let res = doTask(data);
-        console.log(res);
-        rl.close();
-    }
-});
+// testStr1 = `5
+// 110
+// 40
+// 110
+// 40
+// 110`
 
-rl.on('close', () => {
-    process.exit(0);
-});
+
+// testStr1 = `3
+// 111
+// 5
+// 111`
+
+console.log('::: ', doTask(testStr1.split('\n')));
+
+

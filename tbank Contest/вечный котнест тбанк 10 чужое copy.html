@@ -1,0 +1,20 @@
+<div id="grandparent">
+    GRANDPARENT
+    <div id="parent">
+        PARENT
+        <div id="child">
+            CHILD
+        </div>
+    </div>
+</div>
+
+<script>
+    grandparent.addEventListener('click', () => console.log('Grandparent'));
+    parent.addEventListener('click', () => console.log('Parent'));
+    child.addEventListener('click', () => console.log('Child'));
+    
+    // Клик по CHILD выведет:
+    // Child
+    // Parent
+    // Grandparent
+</script>

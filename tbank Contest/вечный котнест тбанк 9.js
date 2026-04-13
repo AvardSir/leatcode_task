@@ -1,79 +1,114 @@
-/**
- * Упрощенная версия без классов
- */
 
-function solveMatrix(rows, x, y) {
-    // Определитель основной матрицы
-    const det = rows[0][0] * rows[1][1] - rows[0][1] * rows[1][0];
-
-    // Определитель с замененным первым столбцом
-    const detX = x * rows[1][1] - y * rows[0][1];
-
-    // Определитель с замененным вторым столбцом
-    const detY = rows[0][0] * y - rows[1][0] * x;
-
-    return [detX / det, detY / det];
-}
 
 function doTask(data) {
+    let n = Number(data[0])
 
-    let roomCords = data[0]
-    function cleanData(str) {
-        str = str.split(' ')
-        str = str.filter((v) => v != '')
-        str = str.map(Number)
-        return str
+    let nums = []
+    for (let i = 1; i < data.length; i++) {
+        const element = data[i];
+        nums.push(Number(element))
     }
-    roomCords = cleanData(roomCords)
-    // let [xRoom, yRoom] = roomCords
-    let planCords = data[1]
-    planCords = cleanData(planCords)
-    //  (0 0)
-    // let [leftDownX, leftDownY] = [planCords[0], planCords[1]]
 
-    // // (X 0)
-    // let [rightDownX, rightDownY] = [planCords[2], planCords[3]]
+    let dp = Array.from({ length: nums.length + 1 }, v => Array.from({ length: nums.length + 1 }, v => Infinity))
 
-    // // (X Y)
-    // let [upRightX, upRightY] = [planCords[4], planCords[5]]
-
-    // // (0,Y)
-    // let [leftRightX, leftRightY] = [planCords[6], planCords[7]]
+    dp[0][0] = 0
 
 
-    // Тестовые данные
-    const [A, D] = roomCords;
-    const [Ax, Ay, Bx, By, Cx, Cy, Dx, Dy] = planCords;
+    for (let i = 0; i < dp.length - 1; i++) {
+        const curDp = dp[i];
+        if (i == 3) {
+            let chehe = 1
+        }
 
-    // Матрица коэффициентов
-    const matrix = [
-        [A - Bx + Ax, -Dx + Ax],
-        [-By + Ay, D - Dy + Ay]
-    ];
+        let curVal = nums[i]
+        for (let j = 0; j < curDp.length - 1; j++) {
+            if (i == 3 && j == 1) {
+                let chehe = 1
+            }
+            const IJel = curDp[j];
+            if (IJel == Infinity) {
+                break
+            }
 
-    // Решение системы
-    const [x, y] = solveMatrix(matrix, Ax, Ay);
+            // что можем:
+            // можем купить обед, если обед >=100 то дается купон
+            // можем использовать купон если они есть
 
-    // Финальный результат
-    const resultX = x * A;
-    const resultY = y * D;
+            if (curVal >= 100) {
+                // dp[i + 1][j + 1] = Math.min(dp[i + 1][j + 1], dp[i][j])
 
-    // Форматированный вывод
-    // console.log(); // 2.500000 2.083333
-    return [resultX.toFixed(6), resultY.toFixed(6)].join(' ')
+                let wasVal = dp[i + 1][j + 1]
+                let newVal = dp[i][j] + curVal
+
+                dp[i + 1][j + 1] = Math.min(wasVal, newVal)
+
+            }
+
+            let wasVal = dp[i + 1][j]
+            let newVal = dp[i][j] + curVal
+
+            dp[i + 1][j] = Math.min(wasVal, newVal)
+
+            if (j > 0) {
+                let wasVal = dp[i + 1][j - 1]
+                let newVal = dp[i][j]
+
+                dp[i + 1][j - 1] = Math.min(wasVal, newVal)
+            }
+
+        }
+
+    }
+
+    let ansMin = Infinity
+    for (let i = 0; i < dp[dp.length - 1].length; i++) {
+        const element = dp[dp.length - 1][i];
+        ansMin = Math.min(ansMin, element)
+    }
+    nums
+    return ansMin
 }
-// todo прочесть обьяснение
 
+// todo прочесть заново код
 
 let testStr1
 
-testStr1 = `10  5
-3.0  2.5  1.0  2.5  1.0  1.5  3.0  1.5`
-// console.log('::: ', doTask(testStr1.split('\n')));
-let firstPartData = '10  5'
-let secondPartData = '3.0  2.5  1.0  2.5  1.0  1.5  3.0  1.5'
-let dataTest1 = [firstPartData, secondPartData]
+testStr1 = `5
+35
+40
+101
+59
+63`
 
-console.log('::: ', doTask(dataTest1));
+
+testStr1 = `2
+100
+98
+99
+`
+
+
+// testStr1 = `2`
+
+// testStr1 = `4
+// 2
+// 100
+// 0
+// 0`
+
+// testStr1 = `5
+// 110
+// 40
+// 110
+// 40
+// 110`
+
+
+// testStr1 = `3
+// 111
+// 5
+// 111`
+
+console.log('::: ', doTask(testStr1.split('\n')));
 
 
