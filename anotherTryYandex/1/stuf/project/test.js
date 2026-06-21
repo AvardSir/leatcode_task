@@ -8,7 +8,7 @@ async function runTests() {
             // { pattern: "users[id]", destination: "/pages/1.html", redirect: 'helo/1.htlm' },
             { pattern: "users[id]", destination: "/pages/2.html" }
         ],
-        processors:'its okey'
+        processors: 'its okey'
         ,
         errorPath: "/pages/error.html"
     };
